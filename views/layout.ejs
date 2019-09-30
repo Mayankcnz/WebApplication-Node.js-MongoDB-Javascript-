@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= data.title %></title>
-  </head>
+  <%- include('partials/head', {title}) %>
   <body>
+    <%- include('partials/navigation', {user}) %>
     <h1>ReallyCool Shoe Shop</h1>
 
     <%- include(page) %>
