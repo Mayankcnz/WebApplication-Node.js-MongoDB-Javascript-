@@ -2,6 +2,7 @@ const express = require('express');
 const auth = require('./auth');
 const shop = require('./shop');
 const cart = require('./cart');
+const utils = require('../src/utils')
 
 const router = express.Router();
 
