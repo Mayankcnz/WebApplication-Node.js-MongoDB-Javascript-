@@ -42,7 +42,7 @@ db.connectToServer((error) =>{
     console.log('could not connect to the database');
     return;
   }else {
-    console.log('Connected to database ')
+    console.log('Connected to database ');
   }
 })
 
