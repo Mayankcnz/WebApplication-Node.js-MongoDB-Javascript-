@@ -2,20 +2,50 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const helmet = require('helmet');
-const db = require('./src/db')
-const path = require('path')
-
+const path = require('path');
+const passport = require('passport');
 
 const routes = require('./routes');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
+const FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.use(new FacebookStrategy({
+  clientID: process.env['FACEBOOK_CLIENT_ID'],
+  clientSecret: process.env['FACEBOOK_CLIENT_SECRET'],
+  callbackURL: '/auth/login/facebook/callback',
+  profileFields: ['id', 'displayName', 'email']
+},
+(accessToken, refreshToken, profile, done) => {
+  process.nextTick(() => {
+    // create user, profile.json.displayname, profile.json.email
+    console.log('info', `User ${profile.id} logged in.`);
+    return done(null, profile);
+  });
+}));
+
 const app = express();
 
-const store = require('connect-mongodb-session')(session);
+// const store = require('connect-mongodb-session')(session);
 
 app.use(helmet());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -30,21 +60,18 @@ app.use(session({
   },
 }));
 
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use('/', routes);
 
-db.connectToServer((error) =>{
-  if(error){
-    console.log('could not connect to the database');
-    return;
-  }else {
-    console.log('Connected to database ');
-  }
-})
+db.connectToServer().then(() => {
+  console.log('Connected to database ');
+}).catch((error) =>{
+  console.log('could not connect to the database');
+  console.log(error);
+});
 
 app.listen(3000, () => {
   console.log('Listening on 3000');

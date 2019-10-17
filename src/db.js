@@ -1,21 +1,13 @@
-const mongo = require('mongodb');
-const dotenv = require('dotenv');
-const MongoClient = mongo.MongoClient;
-dotenv.config();
-const url = process.env.DATABASE_URL;
+const mongoose = require('mongoose');
+
+const url = process.env.DATABASE_URL || 'mongodb://localhost:27017/shoeshop';
+
 let db;
 module.exports = {
-    connectToServer: (callback) =>{
-        MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (error, client ) => {
-            db= client.db('test');
+  connectToServer: () => mongoose.connect(url, {useNewUrlParser: true}),
 
-            return callback(error);
-        });
-    },
-
-/**
- * @return {mongo.Db} db
- */
-
-    getDb: () => db,
+  /**
+   * @return {mongoose} the database
+   */
+  getDb: () => mongoose,
 };
