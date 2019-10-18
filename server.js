@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-
+/**
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.serializeUser(function(user, done) {
@@ -37,7 +37,7 @@ passport.use(new FacebookStrategy({
     console.log('info', `User ${profile.id} logged in.`);
     return done(null, profile);
   });
-}));
+}));*/
 
 const app = express();
 
