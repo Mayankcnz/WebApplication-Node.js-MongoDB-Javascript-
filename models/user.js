@@ -10,6 +10,6 @@ const userSchema = new Schema({
   address: {type: String, required: [true, 'address is required']},
 });
 
-const user = mongoose.model('product', userSchema); // create a product model , which would represent a collection in the database
+const user = mongoose.model('user', userSchema); // create a user model, which would represent a collection in the database
 
 module.exports = user;

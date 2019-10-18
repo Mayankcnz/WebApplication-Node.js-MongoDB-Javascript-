@@ -4,23 +4,31 @@ const utils = require('../src/utils')
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', utils.ensureAuthenticated, (req, res) => {
   return res.send('CART');
 });
 
-router.get('/checkout', (req, res) => {
-
+router.get('/checkout/', utils.ensureAuthenticated, (req, res) => {
+  return res.send('CART');
 });
 
-router.get('/complete', (req, res) => {
-
+router.get('/complete/', utils.ensureAuthenticated, (req, res) => {
+  return res.send('CART');
 });
 
 /**
  * Clear the users cart
  */
-router.get('/clear', (req, res) => {
+router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
+  return res.send('CART');
+});
 
+router.get('/add/:id', utils.ensureAuthenticated, (req, res) => {
+  return res.send('CART');
+});
+
+router.get('delete/:id', utils.ensureAuthenticated, (req, res) => {
+  return res.send('CART');
 });
 
 module.exports = router;

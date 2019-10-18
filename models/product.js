@@ -7,15 +7,24 @@ const productSchema = new Schema({
     type:String,
     required:[true, 'Name field is required']
   },
+  image: {
+    type: String,
+    required: [true, 'Image is required']
+  },
   category: {
     type:String,
-    required:[true, 'Name field is required']
+    required:[true, 'Category field is required']
   },
-  subcategory: [{
+  subCategory: [{
     type:String,
   }],
+  gender: [{
+    type: String,
+    enum: ['m', 'f'],
+    required: [true, 'Gender field must be either m or f']
+  }],
   stock: [{
-    type: Array,
+    type: Array, // should be an array of objects {size: int, count: int}
   }],
   description: {
     type:String,
@@ -25,7 +34,6 @@ const productSchema = new Schema({
     type: Boolean,
     default: true
   },
-  description:String,
   created_at: { type: Date, default: Date.now},
   updated_at: {type: Date, default: Date.now},
 });

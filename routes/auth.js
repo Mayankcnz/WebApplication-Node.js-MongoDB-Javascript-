@@ -6,10 +6,16 @@ const utils = require('../src/utils');
 const router = express.Router();
 
 router.get('/login/', (req, res) => {
+  if(req.user) {
+    return res.redirect('/');
+  }
   return utils.render(req, res, 'login', 'Login', {});
 });
 
 router.get('/signup/', (req, res) => {
+  if(req.user) {
+    return res.redirect('/');
+  }
   return utils.render(req, res, 'signup', 'Sign Up', {});
 });
 
@@ -18,9 +24,7 @@ router.get('/logout/', (req, res) => {
   return res.redirect('/')
 });
 
-router.get('/')
-
-router.post('/signup', (req, res) => {
+router.post('/signup/', (req, res) => {
   return res.send(req.body);
 });
 

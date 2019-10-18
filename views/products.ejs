@@ -1,0 +1,8 @@
+<% if (data.products.length === 0) { %>
+  <p>No Products Found</p>
+<% } %>
+
+<% for(let i = 0; i < data.products.length; i++) { %>
+  <p><%= data.aproducts[i].name %></p>
+  <img src=<%= data.products[i].image %> alt=<%= data.products[i].name %>/>
+<% } %>
