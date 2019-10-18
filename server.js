@@ -4,11 +4,14 @@ const session = require('express-session');
 const helmet = require('helmet');
 const path = require('path');
 const passport = require('passport');
+const db = require('./src/db')
 
 const routes = require('./routes');
 
 const dotenv = require('dotenv');
 dotenv.config();
+
+
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -19,6 +22,8 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
+
+ 
 
 passport.use(new FacebookStrategy({
   clientID: process.env['FACEBOOK_CLIENT_ID'],
