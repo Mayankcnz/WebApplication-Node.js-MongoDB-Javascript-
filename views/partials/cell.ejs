@@ -1,0 +1,16 @@
+<li class="product-item">
+  <a href="/products/<%= product._id %>" class="product-link">
+    <figure class="product-info">
+      <div class="product-info-img">
+        <img src=<%= product.image %> alt=<%= product.name %>>
+      </div>
+      <figcaption class="product-info-description">
+        <h2 class="title"><%= product.name %></h2>
+        <p class="description"><%= product.description %></p>
+      </figcaption>
+      <div class="price-box">
+        <p class="price"><%= product.cost %></p>
+      </div>
+    </figure>
+  </a>
+</li>
