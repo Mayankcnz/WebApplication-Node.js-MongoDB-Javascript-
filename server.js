@@ -24,6 +24,7 @@ passport.deserializeUser(function(user, done) {
 });
 
  
+/**
 
 passport.use(new FacebookStrategy({
   clientID: process.env['FACEBOOK_CLIENT_ID'],
@@ -38,6 +39,8 @@ passport.use(new FacebookStrategy({
     return done(null, profile);
   });
 }));
+
+*/
 
 const app = express();
 

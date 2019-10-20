@@ -15,6 +15,8 @@ const cartSchema = new Schema({
   }
 });
 
+// entire cart is purchased and moved to order history
+// also a cart should get created automatically when a new user is created
 const cart = mongoose.model('cart', cart); // create a product model, which would represent a collection in the database
 
 module.exports = cart;
