@@ -15,17 +15,21 @@ const productSchema = new Schema({
     type:String,
     required:[true, 'Category field is required']
   },
-  subCategory: [{
+  subCategory: {
     type:String,
-  }],
-  gender: [{
+  },
+  gender: {
     type: String,
     enum: ['m', 'f'],
     required: [true, 'Gender field must be either m or f']
-  }],
-  stock: [{
+  },
+  stock: {
     type: Array, // should be an array of objects {size: int, count: int}
-  }],
+  },
+  cost: {
+    type: Number,
+    required: [true, 'Cost must be set'],
+  },
   description: {
     type:String,
     required:[true, 'Description field is required']

@@ -2,8 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const utils = require('../src/utils');
-const ProductController = require('../controllers/product');
-
+const Products = require('../models/product');
 const router = express.Router();
 
 /**
@@ -35,7 +34,7 @@ router.get('/', (req, res) => {
     }
   }
 
-  ProductController.findAll().then((output) => {
+  Products.find().then((output) => {
     return utils.render(req, res, 'products', 'All Products', {products: output});
   }).catch((error) => {
     return utils.renderError(req, res, 500, error);
@@ -44,14 +43,15 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   if(mongoose.Types.ObjectId.isValid(req.params.id)) { // valid id
-    ProductController.findOne(req.params.id).then((output) => {
+    Products.findById(req.params.id).then((output) => {
       if(!output) { // not found
         return utils.renderError(req, res, 404, 'Product not found');
       }
       return utils.render(req, res, 'product', `${output.name}`, {product: output});
-      }).catch((error) => {
+    }).catch((error) => {
+      console.error(error)
       return utils.renderError(req, res, 500, error);
-    })
+    });
   } else {
     return utils.renderError(req, res, 400, 'Invalid id');
   }

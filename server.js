@@ -23,9 +23,6 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
- 
-
-
 passport.use(new FacebookStrategy({
   clientID: process.env['FACEBOOK_CLIENT_ID'],
   clientSecret: process.env['FACEBOOK_CLIENT_SECRET'],
@@ -76,13 +73,13 @@ app.use('/', routes);
 
 db.connectToServer().then(() => {
   console.log('Connected to database ');
+  app.listen(3000, () => {
+    console.log('Listening on 3000');
+  });
 }).catch((error) =>{
   console.log('could not connect to the database');
   console.log(error);
 });
 
-app.listen(3000, () => {
-  console.log('Listening on 3000');
-});
 
 module.exports = app;
