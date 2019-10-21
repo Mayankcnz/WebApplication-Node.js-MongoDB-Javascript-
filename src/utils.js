@@ -22,7 +22,7 @@ module.exports = {
     if (req.isAuthenticated()) {
       next();
     } else {
-      return res.redirect('/auth/steam');
+      return res.redirect('/auth/login');
     }
   },
 };

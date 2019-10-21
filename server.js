@@ -4,15 +4,17 @@ const session = require('express-session');
 const helmet = require('helmet');
 const path = require('path');
 const passport = require('passport');
-const db = require('./src/db')
+const bcrypt = require('bcrypt');
 
+const db = require('./src/db')
 const routes = require('./routes');
+const User = require('./models/user');
 
 const dotenv = require('dotenv');
 dotenv.config();
 
 
-
+const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.serializeUser(function(user, done) {
@@ -32,10 +34,32 @@ passport.use(new FacebookStrategy({
 (accessToken, refreshToken, profile, done) => {
   process.nextTick(() => {
     // create user, profile.json.displayname, profile.json.email
+    User.findOne({email:profile.json.email}).then((output) => {
+      if(output) return done(null, output); // user exists
+      return User.create({name: profile.json.displayname, email: profile.json.email, authType: 'facebook'});
+    }).then((output) => {
+      return done(null, output);
+    }).catch((error) => {
+      return done(error, false);
+    });
     console.log('info', `User ${profile.id} logged in.`);
     return done(null, profile);
   });
 }));
+
+passport.use(new LocalStrategy(
+  (username, password, done) => {
+    User.findOne({email: username}).then((output) => {
+      if (!output) { return done(null, false); } // user doesnt exist
+      bcrypt.compare(password, output.password, (err, res) => {
+        if (output) return done(null, output); // valid password
+        return done(null, false);
+      });
+    }).catch((error) => {
+      return done(error, null)
+    });
+  }
+));
 
 const app = express();
 
