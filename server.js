@@ -37,11 +37,9 @@ passport.use(new FacebookStrategy({
   });
 }));
 
-
-
 const app = express();
 
-// const store = require('connect-mongodb-session')(session);
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 app.use(helmet());
 
@@ -54,12 +52,17 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+const store = new MongoDBStore({
+  uri: process.env.DATABASE_URL || 'mongodb://localhost:27017/shoeshop',
+  collection: 'sessions',
+});
+
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: true,
-//  store,
+  store,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
   },
