@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     return utils.render(req, res, 'index', 'Home', {products});
   }).catch((error) => {
     console.error(error);
-    return utils.renderError(req, res, 500, error)
+    return utils.renderError(req, res, 500, "Failed to connect to database")
   });
 });
 

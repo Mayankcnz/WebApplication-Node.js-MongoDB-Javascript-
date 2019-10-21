@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
   Products.find().then((output) => {
     return utils.render(req, res, 'products', 'All Products', {products: output});
   }).catch((error) => {
-    return utils.renderError(req, res, 500, error);
+    return utils.renderError(req, res, 500, "Failed to connect to database");
   })
 });
 
@@ -50,7 +50,7 @@ router.get('/:id', (req, res) => {
       return utils.render(req, res, 'product', `${output.name}`, {product: output});
     }).catch((error) => {
       console.error(error)
-      return utils.renderError(req, res, 500, error);
+      return utils.renderError(req, res, 500, "Failed to connect to database");
     });
   } else {
     return utils.renderError(req, res, 400, 'Invalid id');
