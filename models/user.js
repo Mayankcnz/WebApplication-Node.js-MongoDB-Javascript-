@@ -1,6 +1,6 @@
 const mongoose = require('../src/db').getDb();
 const Schema = mongoose.Schema;
-const productsSchema = require('./product');
+const productsSchema = require('./product').schema;
 
 const userCartSchema = new Schema({
   items:[productsSchema],
@@ -14,18 +14,17 @@ const userSchema = new Schema({
   authType: {type: String, required: [true, 'required auth type'], default: 'local'},
   address: {type: String, required: [true, 'address is required']},
 
- cart:{
-   type:userCartSchema,
-   default:{
-     items:[],
-     status: "Active"
-   }
- },
-  orderHistory: [{
-    type: Schema.Types.ObjectId,
-    ref: "Cart"
-  }]
-
+  cart:{
+    type:userCartSchema,
+    default:{
+      items:[],
+      status: "Active"
+    }
+  },
+   orderHistory: [{
+     type: Schema.Types.ObjectId,
+     ref: "Cart"
+   }]
 });
 
 const user = mongoose.model('user', userSchema); // create a user model, which would represent a collection in the database

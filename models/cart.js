@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 // create product schema and model
 const cartSchema = new Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     required: [true, 'Need to know who the cart belongs to']
   },
   items: {
