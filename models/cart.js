@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const db = require('../src/db').getDb();
 const Schema = mongoose.Schema;
+const productsSchema = require("./product").schema;
 
 // create product schema and model
 const cartSchema = new Schema({
   items:{
     items:[{qty: Number, default:0,
-    required: true,
     productDetails:productsSchema}],
     default:[]
   },

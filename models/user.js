@@ -1,10 +1,11 @@
 const mongoose = require('../src/db').getDb();
 const Schema = mongoose.Schema;
 const productsSchema = require('./product').schema;
+const userCartSchema = require('./cart').schema;
 
 
-// create product schema and model
-const userSchema = new Scleachema({
+// create product schema and model 
+const userSchema = new Schema({
   name:{type:String, required:[true, 'Name field is required']},
   email: {type: String, required: [true, 'email is required']},
   password: {type: String, required: () => this.authType === 'local'}, // password is only required when authType is local
