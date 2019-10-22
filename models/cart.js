@@ -4,12 +4,15 @@ const Schema = mongoose.Schema;
 
 // create product schema and model
 const cartSchema = new Schema({
-  items: {
-    type: Array,
+  items:{
+    items:[{qty: Number, default:0,
     required: true,
-    default: [],
+    productDetails:productsSchema}],
+    default:[]
   },
 });
+
+
 
 // entire cart is purchased and moved to order history
 // also a cart should get created automatically when a new user is created
