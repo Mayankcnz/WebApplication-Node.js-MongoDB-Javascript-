@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     const products = output.slice(0, 6); // get 6 products
     return utils.render(req, res, 'index', 'Home', {products});
   }).catch((error) => {
-    console.error(error);
+    utils.log('error', error);
     return utils.renderError(req, res, 500, "Failed to connect to database")
   });
 });

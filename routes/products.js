@@ -51,7 +51,7 @@ router.get('/:id', (req, res) => {
       }
       return utils.render(req, res, 'product', `${output.name}`, {product: output});
     }).catch((error) => {
-      console.error(error)
+      utils.log('error', error)
       return utils.renderError(req, res, 500, "Failed to connect to database");
     });
   } else {

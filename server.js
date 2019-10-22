@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const db = require('./src/db')
 const routes = require('./routes');
 const User = require('./models/user');
+const utils = require('./src/utils');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -34,16 +35,15 @@ passport.use(new FacebookStrategy({
 (accessToken, refreshToken, profile, done) => {
   process.nextTick(() => {
     // create user, profile.json.displayname, profile.json.email
-    User.findOne({email:profile.json.email}).then((output) => {
+    User.findOne({email: profile.emails[0].value}).then((output) => {
       if(output) return done(null, output); // user exists
-      return User.create({name: profile.json.displayname, email: profile.json.email, authType: 'facebook'});
+      return User.create({name: profile.displayName, email: profile.emails[0].value, authType: 'facebook'});
     }).then((output) => {
       return done(null, output);
     }).catch((error) => {
       return done(error, false);
     });
-    console.log('info', `User ${profile.id} logged in.`);
-    return done(null, profile);
+    utils.log('info', `User ${profile.emails[0].value} logged in.`);
   });
 }));
 
@@ -66,6 +66,11 @@ const app = express();
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 app.use(helmet());
+
+app.use((req, res, next) => {
+  utils.log('info', `${new Date().toUTCString()} - ${req.ip} : ${req.url}`);
+  next();
+})
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -99,13 +104,13 @@ app.use(passport.session());
 app.use('/', routes);
 
 db.connectToServer().then(() => {
-  console.log('Connected to database ');
+  utils.log('info', 'Connected to database ');
   app.listen(3000, () => {
-    console.log('Listening on 3000');
+    utils.log('info', 'Listening on 3000');
   });
 }).catch((error) =>{
-  console.log('could not connect to the database');
-  console.log(error);
+  utils.log('error', 'could not connect to the database');
+  utils.log('error', error);
 });
 
 

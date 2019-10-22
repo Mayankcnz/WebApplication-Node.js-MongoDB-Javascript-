@@ -27,9 +27,14 @@ router.get('/logout/', (req, res) => {
 });
 
 router.post('/signup/', (req, res) => {
+  User.findOne({email: req.body.email}).then((output) => { // does the user already exist
+    if(output) return res.redirect('/auth/login');
+  }).catch((error) => {
+    return utils.renderError(req, res, 500, 'Something went wrong');
+  });
+  
   bcrypt.hash(req.body.password, 10, (err, hash) => {
     User.create({name: req.body.name, email: req.body.email, password: hash}).then((output) => {
-      console.log(hash);
       return res.redirect('/auth/login');
     }).catch((error) => {
       utils.log(error);

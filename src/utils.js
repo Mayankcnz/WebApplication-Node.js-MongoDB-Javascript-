@@ -1,3 +1,16 @@
+const winston = require('winston');
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    new winston.transports.File({filename: 'logs/error.log', level: 'error'}),
+    new winston.transports.File({filename: 'logs/combined.log'}),
+    new winston.transports.Console({format: winston.format.simple()})
+  ]
+});
+
 /**
  * Render a page
  * @param {Request} req 
@@ -7,17 +20,38 @@
  * @param {Object} data 
  */
 const render = (req, res, page, title, data) => {
-  res.render('layout', {page, title, data, user: req.user});
+  return res.render('layout', {page, title, data, user: req.user});
 };
 
+/**
+ * Render an error page
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {Number} code 
+ * @param {string} error 
+ */
 const renderError = (req, res, code, error) => {
-  render(req, res, 'error', `Error ${code}`, {error, code});
+  return render(req, res, 'error', `Error ${code}`, {error, code});
 }
+
+/**
+ * Log a message to the logger
+ * @param {string} level the level to log
+ * @param {string} message message to log
+ */
+const log = (level, message) => logger.log(level, message);
 
 module.exports = {
   render,
   renderError,
+  log,
   
+  /**
+   * Ensure that the user is authenticated
+   * @param {Request} req
+   * @param {Response} res
+   * @param {void} next
+   */
   ensureAuthenticated: (req, res, next) => {
     if (req.isAuthenticated()) {
       next();
