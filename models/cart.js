@@ -1,3 +1,9 @@
+/* cart constructor function that lets you create cart objects
+  Whenever we access the cart, take the old cartand create a new cart off this old cart
+  Also, be able to check if the product already exists and in the case where
+  it does exists, then we simply update the quanity. 
+*/
+
 module.exports = function Cart(previousCart){
 
   this.items = previousCart.items || {};
