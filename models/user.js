@@ -12,7 +12,7 @@ const userSchema = new Schema({
   authType: {type: String, required: [true, 'required auth type'], default: 'local'},
   address: {type: String},
  //, required: [true, 'address is required']
-  cart:{
+ /** cart:{
     type:userCartSchema,
     default:{
       items:[{qty: Number, default:0,
@@ -24,7 +24,7 @@ const userSchema = new Schema({
    orderHistory: [{
      type: Schema.Types.ObjectId,
      ref: "Cart"
-   }]
+   }]*/
 });
 
 const user = mongoose.model('user', userSchema); // create a user model, which would represent a collection in the database

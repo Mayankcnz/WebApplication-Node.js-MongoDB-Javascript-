@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const utils = require('../src/utils');
-const Products = require('../models/product').schema;
+const Products = require('../models/product');
 const router = express.Router();
 
 /**
