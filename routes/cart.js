@@ -33,9 +33,32 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     if(!product) { // not found
       return utils.renderError(req, res, 404, 'Product not found');
     }
+    User.find().then((output) =>{
+      console.log(output);
+    })
+
+     console.log("printing");
+    /**
+     User.deleteOne({_id: user._id}).then((output) =>{
+       console.log("deletetion");
+       console.log(output);
+     })
+
+      */
+
      User.findById(`${user._id}`).then((User) =>{
-     var length = User.cart.items.push(product)
-     User.save();
+      console.log("IDU");
+      console.log(User);
+
+      console.log(product);
+
+      User.cart.items.items.push({ productID: product.id , qty:1, info:{prod : product}})
+      User.save();
+
+      console.log(User.cart.items.items);
+
+    // var length = User.cart.items.push(product)
+    // User.save();
   }).catch((error) =>{
       utils.log('error', error)
       return utils.renderError(req, res, 500, "Failed to connect to database");

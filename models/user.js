@@ -10,12 +10,13 @@ const userSchema = new Schema({
   email: {type: String, required: [true, 'email is required']},
   password: {type: String, required: () => this.authType === 'local'}, // password is only required when authType is local
   authType: {type: String, required: [true, 'required auth type'], default: 'local'},
-  address: {type: String, required: [true, 'address is required']},
-
+  address: {type: String},
+ //, required: [true, 'address is required']
   cart:{
     type:userCartSchema,
     default:{
       items:[{qty: Number, default:0,
+      productID: Number, required: true,
       productDetails:productsSchema}],
       status: "Active"
     }
