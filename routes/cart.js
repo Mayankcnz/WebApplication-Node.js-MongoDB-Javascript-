@@ -3,6 +3,7 @@ const express = require('express');
 const utils = require('../src/utils')
 const Products = require('../models/product')
 const User = require('../models/user')
+const Cart = require('../models/cart');
 
 const router = express.Router();
 
@@ -28,23 +29,24 @@ router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
 router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
 
   const {user} = req;
+  let cart = new Cart(req.session.cart ? req.session.cart : {items: {}});
+
   Products.findById(req.params.id).then((product) => {
 
     if(!product) { // not found
       return utils.renderError(req, res, 404, 'Product not found');
     }
-    User.find().then((output) =>{
-      console.log(output);
-    })
 
-     console.log("printing");
+    cart.add(product, product.id);
+    req.session.cart = cart;
+    res.redirect('/');
+  
     /**
      User.deleteOne({_id: user._id}).then((output) =>{
        console.log("deletetion");
        console.log(output);
      })
 
-      */
 
      User.findById(`${user._id}`).then((User) =>{
       console.log("IDU");
@@ -63,6 +65,8 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
       utils.log('error', error)
       return utils.renderError(req, res, 500, "Failed to connect to database");
     });
+*/
+
 }).catch((error ) =>{
     utils.log('error', error)
     return utils.renderError(req, res, 500, "Failed to connect to database");
