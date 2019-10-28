@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const utils = require('../src/utils');
-const Products = require('../models/product');
+const Product = require('../models/product');
 const router = express.Router();
 
 /**
@@ -36,16 +36,26 @@ router.get('/', (req, res) => {
     }
   }
 
-  Products.find(req.query).where('cost').lte(maxPrice).then((output) => {
+  Product.find(req.query).where('cost').lte(maxPrice).then((output) => {
     return utils.render(req, res, 'products', 'All Products', {products: output});
   }).catch((error) => {
     return utils.renderError(req, res, 500, "Failed to connect to database");
   })
 });
 
+router.get('/search/', (req, res) => {
+  if(!req.query.q) return utils.renderError(req, res, 400, 'No search parameter supplied');
+  Product.find({$text: {$search: `"${req.query.q}"`}}).then((output) => {
+    return utils.render(req, res, 'products', 'Search Results', {products: output});
+  }).catch((error) => {
+    utils.log('error', error);
+    return utils.renderError(req, res, 500, 'Search failed.');
+  })
+});
+
 router.get('/:id', (req, res) => {
   if(mongoose.Types.ObjectId.isValid(req.params.id)) { // valid id
-    Products.findById(req.params.id).then((output) => {
+    Product.findById(req.params.id).then((output) => {
       if(!output) { // not found
         return utils.renderError(req, res, 404, 'Product not found');
       }
@@ -57,6 +67,6 @@ router.get('/:id', (req, res) => {
   } else {
     return utils.renderError(req, res, 400, 'Invalid id');
   }
-})
+});
 
 module.exports = router;
