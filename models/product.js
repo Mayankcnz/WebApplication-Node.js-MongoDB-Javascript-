@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
   name: {
     type:String,
-    required:[true, 'Name field is required']
+    required:[true, 'Name field is required'],
+    unique: true
   },
   image: {
     type: String,

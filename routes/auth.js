@@ -41,9 +41,9 @@ router.get('/logout/', utils.ensureAuthenticated, (req, res) => {
 
 router.get('/forgot/', (req, res) => {
   if(req.query.token) {
-    User.findById(req.user._id).then((output) => {
-      if (output.resetToken === req.params.token) { // can reset passord
-        return utils.render(req, res, 'reset', 'Reset Password', {token});
+    User.findOne({token: req.query.token}).then((output) => {
+      if (output.token === req.query.token) { // can reset passord
+        return utils.render(req, res, 'reset', 'Reset Password', {token: req.query.token});
       }
       return utils.renderError(req, res, 400, 'Invalid reset token');
     }).catch((error) => {
@@ -59,8 +59,8 @@ router.post('/sendReset/', (req, res) => {
   const current_date = (new Date()).valueOf().toString();
   const random = Math.random().toString();
   const token = crypto.createHash('sha1').update(current_date + random).digest('hex');
-  User.findById(req.body.email).then((output) => {
-    if(!output) return res.redirect('/auth/login/'); // silent exit
+  User.findOne({email: req.body.email}).then((output) => {
+    if(!output) return res.redirect('/auth/forgot/'); // silent fail exit
     output.token = token;
     output.save(); // save the user
 
@@ -68,7 +68,7 @@ router.post('/sendReset/', (req, res) => {
       from: process.env.EMAIL_EMAIL,
       to: req.body.email,
       subject: 'ShoeShop Password Reset',
-      text: `Hello, you have requested a password reset. Navigate to \`/auth/forgot?token=${token}\` to reset your password.`,
+      text: `Hello, you have requested a password reset. Navigate to \`/auth/forgot?token=${token}\` to reset your password. You can also paste the token \`${token}\` into the token field of /auth/forgot`,
     };
 
     // send the email
@@ -78,7 +78,7 @@ router.post('/sendReset/', (req, res) => {
       if(!output.accepted) { 
         utils.log('error', 'Email send failed');
       }
-      return res.redirect('/auth/login/'); // valid email
+      return res.redirect('/auth/forgot/'); // valid email
     }).catch((error) => {
       utils.log('error', error);
       return utils.renderError(req, res, 500, 'Email send failed');
@@ -95,7 +95,7 @@ router.post('/reset/', (req, res) => {
   }
   bcrypt.hash(req.body.newPass1, 10, (err, hash) => { // generate new password
     User.findOne({token: req.body.token}).then((output) => {
-      if(!output) return res.redirect('/auth/login'); // silent exit
+      if(!output) return res.redirect('/auth/login'); // silent fail exit
       output.token = undefined; // clear token
       output.password = hash; // update the password
       output.save(); // save the user

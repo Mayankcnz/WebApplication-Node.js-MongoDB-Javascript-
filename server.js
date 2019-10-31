@@ -37,10 +37,14 @@ passport.use(new FacebookStrategy({
     // create user, profile.json.displayname, profile.json.email
     User.findOne({email: profile.emails[0].value}).then((output) => {
       if(output) return done(null, output); // user exists
-      return User.create({name: profile.displayName, email: profile.emails[0].value, authType: 'facebook'});
-    }).then((output) => {
-      return done(null, output);
+      User.create({name: profile.displayName, email: profile.emails[0].value, authType: 'facebook'}).then((output) => {
+        return done(null, output);
+      }).catch((error) => {
+        utils.log('error', error);
+        return done(error, false);
+      });
     }).catch((error) => {
+      utils.log('error', error);
       return done(error, false);
     });
     utils.log('info', `User ${profile.emails[0].value} logged in.`);
@@ -56,6 +60,7 @@ passport.use(new LocalStrategy(
         return done(null, false);
       });
     }).catch((error) => {
+      utils.log('error', error);
       return done(error, null)
     });
   }
@@ -93,7 +98,7 @@ app.use(session({
   saveUninitialized: true,
   store,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
   },
 }));
 
