@@ -42,6 +42,7 @@ router.get('/logout/', utils.ensureAuthenticated, (req, res) => {
 router.get('/forgot/', (req, res) => {
   if(req.query.token) {
     User.findOne({token: req.query.token}).then((output) => {
+      if(!output || output.authType !== 'local') return res.redirect('/auth/login'); // user not found or not password auth
       if (output.token === req.query.token) { // can reset passord
         return utils.render(req, res, 'reset', 'Reset Password', {token: req.query.token});
       }
@@ -60,7 +61,8 @@ router.post('/sendReset/', (req, res) => {
   const random = Math.random().toString();
   const token = crypto.createHash('sha1').update(current_date + random).digest('hex');
   User.findOne({email: req.body.email}).then((output) => {
-    if(!output) return res.redirect('/auth/forgot/'); // silent fail exit
+    console.log(output)
+    if(!output || output.authType !== 'local') return res.redirect('/auth/forgot/'); // silent fail exit
     output.token = token;
     output.save(); // save the user
 
