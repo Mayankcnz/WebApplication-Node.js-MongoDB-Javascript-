@@ -29,25 +29,30 @@ router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
 router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
 
   const {user} = req;
-  let cart = new Cart(req.session.cart ? req.session.cart : {items: {}});
+  const productID = req.params.id
 
-  Products.findById(req.params.id).then((product) => {
+ // console.log("===================================")
+  var cart = new Cart(user.cart ? user.cart : {});
 
+  // find the product by ID
+  Products.findById(productID).then((product) => {
+
+  
     if(!product) { // not found
       return utils.renderError(req, res, 404, 'Product not found');
     }
-
+    console.log(product);
     cart.add(product, product.id);
-    req.session.cart = cart;
+    user.cart = cart;
+    console.log(user.cart);
     res.redirect('/');
-  
-    /**
-     User.deleteOne({_id: user._id}).then((output) =>{
-       console.log("deletetion");
-       console.log(output);
-     })
+    
+     //User.deleteOne({_id: user._id}).then((output) =>{
+       //console.log("deletetion");
+       //console.log(output);
+     //})
 
-
+/** 
      User.findById(`${user._id}`).then((User) =>{
       console.log("IDU");
       console.log(User);
@@ -57,22 +62,23 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
       User.cart.items.items.push({ productID: product.id , qty:1, info:{prod : product}})
       User.save();
 
-      console.log(User.cart.items.items);
+      console.log(User.cart.items.items);**/
 
     // var length = User.cart.items.push(product)
     // User.save();
-  }).catch((error) =>{
-      utils.log('error', error)
-      return utils.renderError(req, res, 500, "Failed to connect to database");
-    });
-*/
+  //}).catch((error) =>{
+    //  utils.log('error', error)
+     // return utils.renderError(req, res, 500, "Failed to connect to database");
+    //});
+
 
 }).catch((error ) =>{
     utils.log('error', error)
     return utils.renderError(req, res, 500, "Failed to connect to database");
-});
+}); 
 
 });
+
 
 router.get('delete/:id', utils.ensureAuthenticated, (req, res) => {
   return res.send('CART');

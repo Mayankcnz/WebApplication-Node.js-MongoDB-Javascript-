@@ -1,26 +1,36 @@
+
 /* cart constructor function that lets you create cart objects
   Whenever we access the cart, take the old cartand create a new cart off this old cart
   Also, be able to check if the product already exists and in the case where
   it does exists, then we simply update the quanity. 
 */
-
 module.exports = function Cart(previousCart){
 
+  console.log("IN THIS");
+  console.log(previousCart);
   this.items = previousCart.items || {};
   this.totalQty = previousCart.totalQty || 0;
   this.totalPrice = previousCart.totalPrice || 0;
+  console.log(previousCart);
 
 
   this.add = function(item, id){
+    console.log("adding");
     var storedItem = this.items[id];
     if(!storedItem){
+      console.log("should come here");
       storedItem = this.items[id] = {item: item, qty: 0, price: 0};
+      
     }
-
+    console.log("Yolo");
     storedItem.qty++;
+    console.log("Yolo");
     storedItem.price = storedItem.price * storedItem.qty;
+    console.log("Yolo");
     this.totalQty++;
-    this.totalPrice = storedItem.items.price;
+    console.log("Yolo");
+    this.totalPrice = storedItem.item.price;
+    console.log("Yolo");
   };
 
   this.generateArray = function(){
@@ -49,6 +59,5 @@ module.exports = function Cart(previousCart){
     if(this.items[id].qty <= 0){
       delete this.items[id];
     }
-
   }
 }
