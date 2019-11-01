@@ -220,3 +220,8 @@ var shoppingCart = (function() {
   
   displayCart();
   
+
+// this is the code that logs the user out after 10 min of inactivity
+setTimeout(() => {
+  window.location = `/auth/timeout?location=${window.location}`; // log out the user
+}, 1000 * 60 * 10);

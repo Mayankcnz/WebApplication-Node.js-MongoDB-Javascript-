@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
 
 router.get('/search/', (req, res) => {
   if(!req.query.q) return utils.renderError(req, res, 400, 'No search parameter supplied');
-  Product.find({$text: {$search: `"${req.query.q}"`}}).then((output) => {
+  Product.find({$text: {$search: `"${req.query.q.trim()}"`}}).then((output) => {
     return utils.render(req, res, 'products', 'Search Results', {products: output});
   }).catch((error) => {
     utils.log('error', error);

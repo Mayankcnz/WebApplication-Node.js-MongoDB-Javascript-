@@ -56,6 +56,15 @@ router.get('/forgot/', (req, res) => {
   }
 });
 
+router.get('/timeout/', (req, res) => {
+  if(req.user) {
+    req.session.destroy();
+    return utils.render(req, res, 'timeout', 'Timed out', {});
+  } else {
+    return res.redirect(req.query.location || '/');
+  }
+});
+
 router.post('/sendReset/', (req, res) => {
   const current_date = (new Date()).valueOf().toString();
   const random = Math.random().toString();
