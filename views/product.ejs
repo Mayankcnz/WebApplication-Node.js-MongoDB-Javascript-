@@ -1,7 +1,25 @@
-<p><%= data.product.name %></p>
-<img src=<%= data.product.image %> alt=<%= data.product.name %>/>
-
-<% for(let i = 0; i < data.product.stock.length; i++) { %>
-  <p><%= data.product.stock[i].size %></p>
-  <p><%= data.product.stock[i].count %></p>
-<% } %>
+<div class="row">
+  <div class="col-sm-7">
+    <img class="img-fluid" src=<%= data.product.image %> alt=<%= data.product.name %>/>
+    <div style="padding-top: 30px">
+        <p class="productname"><%= data.product.name %></p>
+        <p class="price">Price: $<%= data.product.cost %></p>
+        <p><%= data.product.description %></p>
+        <button onclick="addToCart('<%= data.product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <table class="table">
+      <tr>
+        <th>Shoe size</th>
+        <th>Stock</th>
+      </tr>
+      <% for(let i = 0; i < data.product.stock.length; i++) { %>
+        <tr>
+          <td><%= data.product.stock[i].size %></td>
+          <td><%= data.product.stock[i].count %></td>
+        </tr>
+      <% } %>
+    </table>
+  </div>
+</div>

@@ -3,7 +3,7 @@
   <!-- Full-width images with number and caption text -->
   <% for(let i = 0; i < data.updatedProducts.length; i++) { %>
     <div class="text-center slide fade">
-      <img src="<%= data.updatedProducts[i].image %>" style="width:50%">
+      <img src="<%= data.updatedProducts[i].image %>" class="img-fluid" style="width:50%">
       <div class="caption"><%= data.updatedProducts[i].name %></div>
     </div>
   <% } %>
@@ -21,12 +21,14 @@
   <% } %>
 </div>
 
-<h2>Some Products</h2>
-<ul class="product-list">
-  <% for(let i = 0; i < data.newProducts.length; i++) { %>
-    <%- include('partials/cell', {product: data.newProducts[i]}) %>
-  <% } %>
-</ul>
+<div class="new-products text-center">
+  <h2>Newest Products</h2>
+  <ul class="product-list">
+    <% for(let i = 0; i < data.newProducts.length; i++) { %>
+      <%- include('partials/cell', {product: data.newProducts[i]}) %>
+    <% } %>
+  </ul>
+</div>
 
 <script>
 var slideIndex = 1;

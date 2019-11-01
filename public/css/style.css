@@ -41,7 +41,7 @@
 
 /* Caption text */
 .caption {
-  background-color: rgba(200, 200, 200, 0.8);
+  color: #555555;
   font-size: 15px;
   padding: 8px 12px;
   position: absolute;
@@ -83,6 +83,10 @@
   animation-duration: 1.5s;
 }
 
+.new-products {
+  padding: 50px;
+}
+
 @-webkit-keyframes fade {
   from {opacity: 0}
   to {opacity: 1}
@@ -91,4 +95,10 @@
 @keyframes fade {
   from {opacity: 0}
   to {opacity: 1}
+}
+
+.productname {
+  padding-top: 20px;
+  font-size: 30px;
+  font-weight: bold;
 }
