@@ -17,7 +17,7 @@
 <!-- The dots/circles -->
 <div style="text-align:center">
   <% for(let i = 0; i < data.updatedProducts.length; i++) { %>
-    <span class="dot" onclick="currentSlide(i+1)"></span>
+    <span class="dot" onclick="currentSlide(<%= i+1 %>)"></span>
   <% } %>
 </div>
 
