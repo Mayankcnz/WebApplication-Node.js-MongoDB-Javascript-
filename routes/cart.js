@@ -8,7 +8,23 @@ const Cart = require('../models/cart');
 const router = express.Router();
 
 router.get('/', utils.ensureAuthenticated, (req, res) => {
-  return res.send('CART');
+
+  console.log("IMMMMMMMMMMMM");
+  
+  const {user} = req;
+  console.log("hero");
+  console.log(user);
+  if(user.cart){
+    //return res.render('partials/navigation', {products:null})
+  }
+
+  let cart = new Cart(user.cart);
+  console.log(cart);
+ //// return utils.render(req, res, 'cart', 'Home', {products: cart.generateArray, totalPrice: cart.totalPrice});
+  //res.render('partials/cart', {products: cart.generateArray(), totalPrice: cart.totalPrice})
+  
+  
+  //return res.send('CART');
 });
 
 router.get('/checkout/', utils.ensureAuthenticated, (req, res) => {
@@ -31,6 +47,10 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
   const {user} = req;
   const productID = req.params.id
 
+
+  console.log(user)
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
+
  // console.log("===================================")
   var cart = new Cart(user.cart ? user.cart : {});
 
@@ -44,7 +64,7 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     console.log(product);
     cart.add(product, product.id);
     user.cart = cart;
-    console.log(user.cart);
+    console.log(user);
     res.redirect('/');
     
      //User.deleteOne({_id: user._id}).then((output) =>{
