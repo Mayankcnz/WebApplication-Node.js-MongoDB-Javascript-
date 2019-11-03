@@ -22,6 +22,8 @@ const logger = winston.createLogger({
 const render = (req, res, page, title, data) => {
   console.log("Rendering ============================");
   console.log(page)
+  console.log(data);
+  console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
   return res.render('layout', {page, title, data, user: req.user});
 };
 

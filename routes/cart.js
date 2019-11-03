@@ -12,19 +12,14 @@ router.get('/', utils.ensureAuthenticated, (req, res) => {
   console.log("IMMMMMMMMMMMM");
   
   const {user} = req;
-  console.log("hero");
-  console.log(user);
-  if(user.cart){
-    //return res.render('partials/navigation', {products:null})
+  //console.log(user);
+  if(user.cart === undefined){
+    return utils.render(req, res, 'cart', 'Home', {products: null, totalPrice: 0});
   }
 
   let cart = new Cart(user.cart);
-  console.log(cart);
- //// return utils.render(req, res, 'cart', 'Home', {products: cart.generateArray, totalPrice: cart.totalPrice});
-  //res.render('partials/cart', {products: cart.generateArray(), totalPrice: cart.totalPrice})
-  
-  
-  //return res.send('CART');
+  return utils.render(req, res, 'cart', 'Home', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+
 });
 
 router.get('/checkout/', utils.ensureAuthenticated, (req, res) => {
@@ -61,10 +56,10 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     if(!product) { // not found
       return utils.renderError(req, res, 404, 'Product not found');
     }
-    console.log(product);
+   // console.log(product);
     cart.add(product, product.id);
     user.cart = cart;
-    console.log(user);
+    //console.log(user);
     res.redirect('/');
     
      //User.deleteOne({_id: user._id}).then((output) =>{
