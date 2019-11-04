@@ -8,18 +8,13 @@ const Cart = require('../models/cart');
 const router = express.Router();
 
 router.get('/', utils.ensureAuthenticated, (req, res) => {
-
-  console.log("IMMMMMMMMMMMM");
-  
-  const {user} = req;
-  //console.log(user);
-  if(user.cart === undefined){
-    return utils.render(req, res, 'cart', 'Home', {products: null, totalPrice: 0});
-  }
-
-  let cart = new Cart(user.cart);
-  return utils.render(req, res, 'cart', 'Home', {products: cart.generateArray(), totalPrice: cart.totalPrice});
-
+  User.findById(req.user._id).then((output) => {
+    console.log(output.cart.items);
+    return utils.render(req, res, 'cart', 'Cart', {cart: output.cart});
+  }).catch((error) => {
+    utils.log('error', error);
+    return utils.renderError(req, res, 500, 'Failed to connect to database');
+  });
 });
 
 router.get('/checkout/', utils.ensureAuthenticated, (req, res) => {
@@ -34,66 +29,35 @@ router.get('/complete/', utils.ensureAuthenticated, (req, res) => {
  * Clear the users cart
  */
 router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
-  return res.send('CART');
+  User.findById(req.user._id).then((output) => {
+    output.cart = {items: [], totalPrice: 0};
+    output.save();
+    return utils.render(req, res, 'cart', 'Cart', {cart: {items: [], totalPrice: 0}});
+  }).catch((error) => {
+    utils.log('error', error);
+    return utils.renderError(req, res, 500, 'Error occured clearing cart');
+  })
 });
 
 router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
-
-  const {user} = req;
-  const productID = req.params.id
-
-
-  console.log(user)
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
-
- // console.log("===================================")
-  var cart = new Cart(user.cart ? user.cart : {});
-
-  // find the product by ID
-  Products.findById(productID).then((product) => {
-
-  
-    if(!product) { // not found
-      return utils.renderError(req, res, 404, 'Product not found');
+  Promise.all([
+    User.findById(req.user._id),
+    Products.findById(req.params.id)
+  ]).then((outputs) => {
+    if(!outputs[1]) { // product not found
+      return res.send({error: 'Product not found', status: 404, added: false});
     }
-   // console.log(product);
-    cart.add(product, product.id);
-    user.cart = cart;
-    //console.log(user);
-    res.redirect('/');
-    
-     //User.deleteOne({_id: user._id}).then((output) =>{
-       //console.log("deletetion");
-       //console.log(output);
-     //})
 
-/** 
-     User.findById(`${user._id}`).then((User) =>{
-      console.log("IDU");
-      console.log(User);
-
-      console.log(product);
-
-      User.cart.items.items.push({ productID: product.id , qty:1, info:{prod : product}})
-      User.save();
-
-      console.log(User.cart.items.items);**/
-
-    // var length = User.cart.items.push(product)
-    // User.save();
-  //}).catch((error) =>{
-    //  utils.log('error', error)
-     // return utils.renderError(req, res, 500, "Failed to connect to database");
-    //});
-
-
-}).catch((error ) =>{
+    const cart = new Cart(outputs[0].cart);
+    cart.add(outputs[1]);
+    outputs[0].cart = cart.getObject();
+    outputs[0].save();
+    return res.send({added: true, status: 200})
+  }).catch((error) =>{
     utils.log('error', error)
-    return utils.renderError(req, res, 500, "Failed to connect to database");
-}); 
-
+    return res.send({error, status: 500, added: false});
+  });
 });
-
 
 router.get('delete/:id', utils.ensureAuthenticated, (req, res) => {
   return res.send('CART');

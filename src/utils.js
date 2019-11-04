@@ -1,5 +1,7 @@
 const winston = require('winston');
 
+const User = require('../models/user');
+
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
@@ -20,11 +22,15 @@ const logger = winston.createLogger({
  * @param {Object} data 
  */
 const render = (req, res, page, title, data) => {
-  console.log("Rendering ============================");
-  console.log(page)
-  console.log(data);
-  console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
-  return res.render('layout', {page, title, data, user: req.user});
+  if(req.user) {
+    User.findById(req.user._id).then((output) => {
+      return res.render('layout', {page, title, data, user: output});
+    }).catch((error) => {
+      return res.render('error', {title: `Error ${500}`, data: {error: 'Internal Server Error', code: 500}, user: output});
+    })
+  } else {
+    return res.render('layout', {page, title, data, user: undefined});
+  }
 };
 
 /**
@@ -41,7 +47,7 @@ const renderError = (req, res, code, error) => {
 /**
  * Log a message to the logger
  * @param {string} level the level to log
- * @param {string} message message to log
+ * @param {any} message message to log
  */
 const log = (level, message) => logger.log(level, message);
 

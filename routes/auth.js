@@ -70,7 +70,6 @@ router.post('/sendReset/', (req, res) => {
   const random = Math.random().toString();
   const token = crypto.createHash('sha1').update(current_date + random).digest('hex');
   User.findOne({email: req.body.email}).then((output) => {
-    console.log(output)
     if(!output || output.authType !== 'local') return res.redirect('/auth/forgot/'); // silent fail exit
     output.token = token;
     output.save(); // save the user
