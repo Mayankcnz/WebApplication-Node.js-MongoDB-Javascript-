@@ -1,12 +1,6 @@
 <div class="row">
   <div class="col-sm-7">
     <img class="img-fluid" src=<%= data.product.image %> alt=<%= data.product.name %>/>
-    <div style="padding-top: 30px">
-        <p class="productname"><%= data.product.name %></p>
-        <p class="price">Price: $<%= data.product.cost %></p>
-        <p><%= data.product.description %></p>
-        <button onclick="addToCart('<%= data.product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
-    </div>
   </div>
   <div class="col-sm-5">
     <table class="table">
@@ -20,6 +14,13 @@
           <td><%= data.product.stock[i].count %></td>
         </tr>
       <% } %>
+      <div style="padding-top: 30px">
+          <p class="productname"><%= data.product.name %></p>
+          <p class="price">Price: $<%= data.product.cost %></p>
+          <p><%= data.product.description %></p>
+          <button onclick="addToCart('<%= data.product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
+          <div style="padding-bottom: 30px"></div>
+      </div>
     </table>
   </div>
 </div>
