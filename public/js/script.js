@@ -14,6 +14,23 @@ const addToCart = (id) =>{
   })
 }
 
+const deleteFromCart = (id) =>{
+
+  console.log("omh ");
+
+  fetch(`/cart/delete/${id}`, {method:'DELETE'}).then((output) =>{
+    return output.json();
+  }).then((output) =>{
+    if(output.error){
+      console.error(output.error);
+    }else {
+      console.log(output);
+    }
+  }).catch((error) =>{
+    console.error(error);
+  })
+}
+
 // this is the code that logs the user out after 10 min of inactivity
 setTimeout(() => {
   window.location = `/auth/timeout?location=${window.location}`; // log out the user

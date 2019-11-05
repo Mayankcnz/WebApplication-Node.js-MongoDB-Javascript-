@@ -13,7 +13,7 @@
           </div>
         </td>
         <td>
-          <button class="delete-item btn btn-danger" data-name='<%= data.cart.items[i].item.name %>' >Delete</button>
+          <button onclick="deleteFromCart('<%= data.cart.items[i].item._id %>')" class="delete-item btn btn-danger" data-name='<%= data.cart.items[i].item.name %>' >Delete</button>
         </td>  
         <td>
           Quantity: <%= data.cart.items[i].qty %>

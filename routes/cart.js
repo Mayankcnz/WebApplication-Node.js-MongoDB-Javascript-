@@ -59,8 +59,30 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get('delete/:id', utils.ensureAuthenticated, (req, res) => {
-  return res.send('CART');
+router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
+
+  const id = req.params.id
+  User.findById(req.user._id).then((user) => {
+  const {cart} = user
+  const items = cart.items;
+  const mycart = new Cart(cart);
+  for (i in items){
+    if(items[i].item._id == id){
+      var list = mycart.remove(i);
+      break;
+    }
+  }
+  user.cart = mycart.getObject();
+  user.save();
+
+
+  return utils.render(req, res, 'cart', 'Cart', {cart: mycart.getObject()});
+ // return res.send({delete: true, status: 200})
+
+  }).catch((error) =>{
+
+    console.log(error);
+  });
 });
 
 module.exports = router;

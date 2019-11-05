@@ -27,7 +27,7 @@ class Cart {
     if(storedItem) { // item exists in cart
       this.items[item].qty = this.items[item].qty - 1;
       if(this.items[item].qty === 0) { // none left so delete
-        delete this.items[item];
+         this.items.splice(item, 1);
       }
       this.totalPrice -= item.cost;
     }
