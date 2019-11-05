@@ -14,8 +14,12 @@ const router = express.Router();
  *  subCategory - a sub category for the shoe, string
  *  maxPrice - the max price that we want to search for, integer >= 0
  */
-router.get('/', (req, res) => {
+router.get('/:page', (req, res) => {
   let maxPrice = 9999; // assumes that we wont have a product more than this cost
+
+  const pagination = req.query.pagination
+  ? parseInt(req.query.pagination) : 2;
+  const page = req.params.page ? parseInt(req.params.page) : 1; 
 
   if (req.query.gender) { // does gender param exist
     if (!req.query.gender.toLowerCase() === 'f' || !req.query.gender.toLowerCase() === 'm') { // not m or f
@@ -36,8 +40,13 @@ router.get('/', (req, res) => {
     }
   }
 
-  Product.find(req.query).where('cost').lte(maxPrice).then((output) => {
-    return utils.render(req, res, 'products', 'All Products', {products: output});
+  Product.find(req.query).skip((page -1 ) * pagination).limit(pagination).where('cost').lte(maxPrice).then((output) => {
+   Product.count().exec(function(err, count){
+     if(err){
+       console.log(err);
+     }
+     return utils.render(req, res, 'products', 'All Products', {products: output, current:page, pages:Math.ceil(count/pagination)});
+   })
   }).catch((error) => {
     return utils.renderError(req, res, 500, "Failed to connect to database");
   })
