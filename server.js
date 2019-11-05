@@ -110,7 +110,7 @@ app.use('/', routes);
 
 db.connectToServer().then(() => {
   utils.log('info', 'Connected to database ');
-  app.listen(3000, () => {
+  app.listen(process.env.PORT || 3000, () => {
     utils.log('info', 'Listening on 3000');
   });
 }).catch((error) =>{
