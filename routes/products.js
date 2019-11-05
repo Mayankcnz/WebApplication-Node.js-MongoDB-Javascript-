@@ -14,12 +14,14 @@ const router = express.Router();
  *  subCategory - a sub category for the shoe, string
  *  maxPrice - the max price that we want to search for, integer >= 0
  */
-router.get('/:page', (req, res) => {
-  let maxPrice = 9999; // assumes that we wont have a product more than this cost
+router.get('/', (req, res) => {
+  let maxPrice = 9999; // assumes that we wont have a product more than this cost (highly unlikely anyway)
+  let minPrice = 0;
 
-  const pagination = req.query.pagination
-  ? parseInt(req.query.pagination) : 2;
-  const page = req.params.page ? parseInt(req.params.page) : 1; 
+  const pagination = req.query.pagination ? parseInt(req.query.pagination) : 2;
+  const page = req.query.page ? parseInt(req.query.page) : 1;
+  delete req.query.pagination
+  delete req.query.page
 
   if (req.query.gender) { // does gender param exist
     if (!req.query.gender.toLowerCase() === 'f' || !req.query.gender.toLowerCase() === 'm') { // not m or f
@@ -40,14 +42,28 @@ router.get('/:page', (req, res) => {
     }
   }
 
-  Product.find(req.query).skip((page -1 ) * pagination).limit(pagination).where('cost').lte(maxPrice).then((output) => {
-   Product.count().exec(function(err, count){
+  if (req.query.minPrice) { // is max price set?
+    if (Number.isNaN(Number.parseInt(req.query.minPrice))) { // not a number
+      return utils.renderError(req, res, 400, 'minPrice must be a number');
+    } else {
+      if(Number.parseInt(req.query.minPrice) < 0) { // invalid min price
+        return utils.renderError(req, res, 400, 'minPrice must be a number');
+      }
+      minPrice = Number.parseInt(req.query.maxPrice);
+      delete req.query.minPrice;
+    }
+  }
+
+  // `req.query` is passed directly to mongoose in order to find the documents
+  Product.find(req.query).skip((page - 1) * pagination).limit(pagination).where('cost').lte(maxPrice).where('cost').gte(minPrice).then((output) => {
+   Product.count(req.query).exec(function(err, count){
      if(err){
        console.log(err);
      }
      return utils.render(req, res, 'products', 'All Products', {products: output, current:page, pages:Math.ceil(count/pagination)});
    })
   }).catch((error) => {
+    utils.log
     return utils.renderError(req, res, 500, "Failed to connect to database");
   })
 });

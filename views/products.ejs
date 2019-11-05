@@ -14,28 +14,50 @@
     <% if (data.current ==  1) { %>
       <li class="page-item disabled"><a class="page-link">First</a></li>
     <% } else { %>
-      <li class="page-item"><a class="page-link" href="/products/1">First</a></li>
+      <li class="page-item"><a class="page-link" onclick="changePage(1)">First</a></li>
     <% } %>
     <% var i = (Number(data.current) > 5 ? Number(data.current) - 4 : 1) %>
 
     <% if (i !== 1) { %>
-  <li class="disabled page-item"><a class="page-link">...</a></li>
-<% } %>
-<% for (; i <= (Number(data.current) + 4) && i <= data.pages; i++) { %>
-  <% if (i == data.current) { %>
-      <li class="page-item active"><a class="page-link"><%= i %></a></li>
-  <% } else { %>
-      <li class="page-item"><a class="page-link" href="/products/<%= i %>"><%= i %></a></li>
+      <li class="disabled page-item"><a class="page-link">...</a></li>
+    <% } %>
+    <% for (; i <= (Number(data.current) + 4) && i <= data.pages; i++) { %>
+      <% if (i == data.current) { %>
+          <li class="page-item active"><a class="page-link"><%= i %></a></li>
+      <% } else { %>
+          <li class="page-item"><a class="page-link" onclick="changePage(<%= i %>)"><%= i %></a></li>
+      <% } %>
+      <% if (i == Number(data.current) + 4 && i < data.pages) { %>
+          <li class="page-item disabled"><a class="page-link">...</a></li>
+      <% } %>
+    <% } %>
+    <% if (data.current == data.pages) { %>
+      <li class="page-item disabled"><a class="page-link">Last</a></li>
+    <% } else { %>
+      <li class="page-item"><a class="page-link" onclick="changePage(<%= data.pages %>)">Last</a></li>
+    <% } %>
+    </ul>
   <% } %>
-  <% if (i == Number(data.current) + 4 && i < data.pages) { %>
-      <li class="page-item disabled"><a class="page-link">...</a></li>
-  <% } %>
-<% } %>
-<% if (data.current == data.pages) { %>
-  <li class="page-item disabled"><a class="page-link">Last</a></li>
-<% } else { %>
-  <li class="page-item"><a class="page-link" href="/products/<%= data.pages %>">Last</a></li>
-<% } %>
-</ul>
-<% } %>
 </div>
+
+<script>
+  function changePage(pageNum) {
+    var newAdditionalURL = "";
+    var tempArray = window.location.href.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (var i=0; i<tempArray.length; i++){
+            if(tempArray[i].split('=')[0] != 'page'){
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+
+    var rows_txt = temp + "" + 'page' + "=" + pageNum;
+    window.location = baseURL + "?" + newAdditionalURL + rows_txt;
+  }
+</script>
