@@ -49,21 +49,22 @@ router.get('/', (req, res) => {
       if(Number.parseInt(req.query.minPrice) < 0) { // invalid min price
         return utils.renderError(req, res, 400, 'minPrice must be a number');
       }
-      minPrice = Number.parseInt(req.query.maxPrice);
+      minPrice = Number.parseInt(req.query.minPrice);
       delete req.query.minPrice;
     }
   }
 
   // `req.query` is passed directly to mongoose in order to find the documents
   Product.find(req.query).skip((page - 1) * pagination).limit(pagination).where('cost').lte(maxPrice).where('cost').gte(minPrice).then((output) => {
-   Product.count(req.query).exec(function(err, count){
-     if(err){
-       console.log(err);
-     }
-     return utils.render(req, res, 'products', 'All Products', {products: output, current:page, pages:Math.ceil(count/pagination)});
-   })
+    Product.countDocuments(req.query).where('cost').lte(maxPrice).where('cost').gte(minPrice).exec(function(err, count){
+      if(err){
+        utils.log('error', err);
+        return utils.renderError(req, res, 500, 'Failed to load products');
+      }
+      return utils.render(req, res, 'products', 'All Products', {products: output, current:page, pages:Math.ceil(count/pagination)});
+    })
   }).catch((error) => {
-    utils.log
+    utils.log('error', error)
     return utils.renderError(req, res, 500, "Failed to connect to database");
   })
 });

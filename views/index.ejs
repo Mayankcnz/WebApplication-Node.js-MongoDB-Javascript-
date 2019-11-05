@@ -21,138 +21,92 @@
   <% } %>
 </div>
 
-<!--<div class="new-products text-center">
-  <h2>Newest Products</h2>
-  <ul class="product-list">
-    <% for(let i = 0; i < data.newProducts.length; i++) { %>
-      <%- include('partials/cell', {product: data.newProducts[i]}) %>
-    <% } %>
-  </ul>
-</div> -->
-
 <div class="row">
 <div class="col-sm-3">
-    <div class="left-sidebar">
-      <h2>Category</h2>
-      <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                Sportswear
-              </a>
-            </h4>
-          </div>
-          <div id="sportswear" class="panel-collapse collapse">
-            <div class="panel-body">
-              <ul>
-                <li><a href="#">Nike </a></li>
-                <li><a href="#">Under Armour </a></li>
-                <li><a href="#">Adidas </a></li>
-                <li><a href="#">Puma</a></li>
-                <li><a href="#">ASICS </a></li>
-              </ul>
-            </div>
+  <div class="left-sidebar">
+    <h2>Category</h2>
+    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+              <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+              Mens
+            </a>
+          </h4>
+        </div>
+        <div id="mens" class="panel-collapse collapse">
+          <div class="panel-body">
+            <ul>
+              <li><a href="/products?brand=adidas&gender=m">Adidas</a></li>
+              <li><a href="/products?brand=nike&gender=m">Nike</a></li>
+              <li><a href="/products?brand=puma&gender=m">Puma</a></li>
+              <li><a href="/products?brand=new balance&gender=m">New Balance</a></li>
+              <li><a href="/products?brand=reebok&gender=m">Reebok</a></li>
+              <li><a href="/products?brand=asics&gender=m">ASICS</a></li>
+            </ul>
           </div>
         </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                Mens
-              </a>
-            </h4>
-          </div>
-          <div id="mens" class="panel-collapse collapse">
-            <div class="panel-body">
-              <ul>
-                <li><a href="#">Fendi</a></li>
-                <li><a href="#">Guess</a></li>
-                <li><a href="#">Valentino</a></li>
-                <li><a href="#">Dior</a></li>
-                <li><a href="#">Versace</a></li>
-                <li><a href="#">Armani</a></li>
-                <li><a href="#">Prada</a></li>
-                <li><a href="#">Dolce and Gabbana</a></li>
-                <li><a href="#">Chanel</a></li>
-                <li><a href="#">Gucci</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                Womens
-              </a>
-            </h4>
-          </div>
-          <div id="womens" class="panel-collapse collapse">
-            <div class="panel-body">
-              <ul>
-                <li><a href="#">Fendi</a></li>
-                <li><a href="#">Guess</a></li>
-                <li><a href="#">Valentino</a></li>
-                <li><a href="#">Dior</a></li>
-                <li><a href="#">Versace</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title"><a href="#">Kids</a></h4>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title"><a href="#">Fashion</a></h4>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title"><a href="#">Households</a></h4>
-          </div>
-        </div>
-      </div><!--/category-products-->
-    
-      <div class="brands_products"><!--brands_products-->
-        <h2>Brands</h2>
-        <div class="brands-name">
-          <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"> <span class="pull-right">(50)</span>Adidas</a></li>
-            <li><a href="#"> <span class="pull-right">(56)</span>Nike</a></li>
-            <li><a href="#"> <span class="pull-right">(27)</span>Puma</a></li>
-            <li><a href="#"> <span class="pull-right">(32)</span>New Balance</a></li>
-            <li><a href="#"> <span class="pull-right">(5)</span>Polo</a></li>
-            <li><a href="#"> <span class="pull-right">(9)</span>Reebok</a></li>
-            <li><a href="#"> <span class="pull-right">(4)</span>ASICS</a></li>
-          </ul>
-        </div>
-      </div><!--/brands_products-->
-      
-      <div class="price-range"><!--price-range-->
-        <h2>Price Range</h2>
-         
-<p>
-    <label for="amount">Price range:</label>
-    <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
-  </p>
-   
-  <div id="slider-range"></div>
-        </div>
-
-      
-      <div class="shipping text-center">
       </div>
+      
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordian" href="#womens">
+              <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+              Womens
+            </a>
+          </h4>
+        </div>
+        <div id="womens" class="panel-collapse collapse">
+          <div class="panel-body">
+            <ul>
+              <li><a href="/products?brand=adidas&gender=f">Adidas</a></li>
+              <li><a href="/products?brand=nike&gender=f">Nike</a></li>
+              <li><a href="/products?brand=puma&gender=f">Puma</a></li>
+              <li><a href="/products?brand=new balance&gender=f">New Balance</a></li>
+              <li><a href="/products?brand=polo&gender=f">Polo</a></li>
+              <li><a href="/products?brand=reebok&gender=f">Reebok</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a href="#">Kids</a></h4>
+        </div>
+      </div>
+    </div><!--/category-products-->
+  
+    <div class="brands_products"><!--brands_products-->
+      <h2>Brands</h2>
+      <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="/products?brand=adidas">Adidas</a></li>
+          <li><a href="/products?brand=nike">Nike</a></li>
+          <li><a href="/products?brand=puma">Puma</a></li>
+          <li><a href="/products?brand=new balance">New Balance</a></li>
+          <li><a href="/products?brand=polo">Polo</a></li>
+          <li><a href="/products?brand=reebok">Reebok</a></li>
+          <li><a href="/products?brand=asics">ASICS</a></li>
+        </ul>
+      </div>
+    </div><!--/brands_products-->
     
+    <div class="price-range"><!--price-range-->
+      <form action="/products" method="GET">
+        <h2>Price Range</h2>
+        <label for="amount">Price range:</label>
+        <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+        <input type="hidden" id="maxPrice" name="maxPrice" />
+        <input type="hidden" id="minPrice" name="minPrice" />
+        
+        <div id="slider-range"></div><br />
+        <input type="submit" value="Apply price" />
+      </form>
     </div>
   </div>
+</div>
 
 <div class="new-products text-center col-sm-9 padding-right">
   <h2>Newest Products</h2>
@@ -164,27 +118,29 @@
 </div>
 </div>
 
-  <script>
+<script>
   $(function() {
     $( "#slider-range" ).slider({
       step: 1,
       range: true,
       min: 0,
-      max: 1000,
-      values: [ 1, 20 ],
+      max: 400,
+      values: [ 0, 200 ],
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        $("#maxPrice").val(ui.values[1]); // update max price
+        $("#minPrice").val(ui.values[0]); // update min price
       }
     });
     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
       " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    $("#maxPrice").val($("#slider-range").slider("values", 1)); // set default max price
+    $("#minPrice").val($("#slider-range").slider("values", 0)); // set default min price
   });
-  </script>
-
-
+</script>
 
 <script>
-var slideIndex = 1;
+  var slideIndex = 1;
   showSlides(slideIndex);
 
   // Next/previous controls
