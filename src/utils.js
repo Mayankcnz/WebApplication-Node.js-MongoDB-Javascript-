@@ -29,6 +29,8 @@ const render = (req, res, page, title, data) => {
       return res.render('error', {title: `Error ${500}`, data: {error: 'Internal Server Error', code: 500}, user: output});
     })
   } else {
+    console.log("rednering");
+    console.log(page);
     return res.render('layout', {page, title, data, user: undefined});
   }
 };
