@@ -1,16 +1,18 @@
 <li class="product-item">
-  <figure class="product-info">
-    <div class="product-info-img">
-      <a href="/products/<%= product._id %>" class="product-link"><img src=<%= product.image %> alt=<%= product.name %> /> </a>
-    </div>
-    <figcaption class="product-info-description">
-      <h2 class="title"><%= product.name %></h2>
-      <p class="description"><%= product.description %></p>
-    </figcaption>
-    <div class="price-box">
-      <p class="price">$<%= product.cost %></p>
-      <button onclick="addToCart('<%= product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
-    </div>
-  </figure>
+    <figure class="product-info">
+      <a href="/products/<%= product._id %>" class="product-link">
+        <div class="product-info-img">
+          <img src=<%= product.image %> alt=<%= product.name %> />
+        </div>
+        <figcaption class="product-info-description">
+          <h2 class="title"><%= product.name %></h2>
+          <p class="description"><%= product.description %></p>
+        </figcaption>
+      </a>
+      <div class="price-box">
+        <p class="price">$<%= product.cost %></p>
+        <button onclick="addToCart('<%= product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
+      </div>
+    </figure>
 </li>
 

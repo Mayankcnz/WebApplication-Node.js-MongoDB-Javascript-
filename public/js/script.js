@@ -4,29 +4,33 @@ const addToCart = (id) =>{
     return output.json();
   }).then((output) => {
     if(output.error) {
-      // error message
+      alert('Failed to add item to cart')
       console.error(output.error);
     } else {
       console.log(output); // show a completion dialog
     }
   }).catch((error) => {
+    alert('Failed to add item to cart, are you logged in?')
     console.error(error); // show an error dialog
   })
 }
 
 const deleteFromCart = (id) =>{
-
-  console.log("omh ");
-
   fetch(`/cart/delete/${id}`, {method:'DELETE'}).then((output) =>{
     return output.json();
   }).then((output) =>{
     if(output.error){
+      alert('Failed to delete item')
+      location.reload()
       console.error(output.error);
     }else {
+      alert('Item deleted')
+      location.reload()
       console.log(output);
     }
   }).catch((error) =>{
+    alert('Failed to delete item, are you logged in?')
+    location.reload()
     console.error(error);
   })
 }

@@ -60,7 +60,6 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
 });
 
 router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
-
   const id = req.params.id
   User.findById(req.user._id).then((user) => {
   const {cart} = user
@@ -75,13 +74,10 @@ router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
   user.cart = mycart.getObject();
   user.save();
 
-
-  return utils.render(req, res, 'cart', 'Cart', {cart: mycart.getObject()});
- // return res.send({delete: true, status: 200})
-
+ return res.send({delete: true, status: 200})
   }).catch((error) =>{
-
-    console.log(error);
+    utils.log('error', error);
+    return res.send({delete: false, status: 500, error: 'Failed to delete item'})
   });
 });
 
