@@ -15,11 +15,11 @@ router.use('/cart', cart);
 
 router.get('/', (req, res) => {
   Promise.all([
-    Products.find().sort({updated_at: 1}),
-    Products.find().sort({created_at: 1}),
+    Products.find().sort({updated_at: -1}).limit(4),
+    Products.find().sort({created_at: -1}).limit(4),
   ]).then((output) => {
-    const updatedProducts = output[0].slice(0, 4); // get 4 products
-    const newProducts = output[1].slice(0, 4); // get 4 products
+    const updatedProducts = output[0]
+    const newProducts = output[1]
     return utils.render(req, res, 'index', 'Home', {newProducts, updatedProducts});
   }).catch((error) => {
     utils.log('error', error);

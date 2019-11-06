@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
   let maxPrice = 9999; // assumes that we wont have a product more than this cost (highly unlikely anyway)
   let minPrice = 0;
 
-  const pagination = req.query.pagination ? parseInt(req.query.pagination) : 2;
+  const pagination = req.query.pagination ? parseInt(req.query.pagination) : 4;
   const page = req.query.page ? parseInt(req.query.page) : 1;
   delete req.query.pagination
   delete req.query.page
