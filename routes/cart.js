@@ -9,7 +9,10 @@ const router = express.Router();
 
 router.get('/', utils.ensureAuthenticated, (req, res) => {
   User.findById(req.user._id).then((output) => {
+    console.log("GGGGGG");
     console.log(output.cart.items);
+    console.log("after");
+    console.log(output.cart);
     return utils.render(req, res, 'cart', 'Cart', {cart: output.cart});
   }).catch((error) => {
     utils.log('error', error);

@@ -11,8 +11,17 @@ class Cart {
   }
 
   add(item) {
-    if(this.items[item]) { // item exists in cart
-      this.items[item].qty = this.items[item].qty + 1;
+    
+    let exits = false;
+    let i = 0;
+    for (i; i < this.items.length; i++){
+      if(JSON.stringify(this.items[i].item._id) === JSON.stringify(item._id)){
+        exits = true;
+        break;
+      }
+    }
+    if(exits) { // item exists in cart
+      this.items[i].qty = this.items[i].qty + 1;
     } else { // new item to be added
       console.log(typeof(this.items));
       if (typeof(this.items) != "object") this.items = [];
