@@ -2,16 +2,35 @@
 
 [Slides for project progress](https://myvuwac-my.sharepoint.com/:p:/r/personal/honissluke_myvuw_ac_nz/_layouts/15/Doc.aspx?sourcedoc=%7B8BAB8085-EE5C-4676-974F-01CC1A8EC0F9%7D&file=Presentation.pptx&action=edit&mobileredirect=true&wdNewAndOpenCt=1570056463489&wdPreviousSession=7465ba52-9266-4c08-b4cc-5df99f78254b&wdOrigin=ohpAppStartPages)
 
+[Slides for final presentation](https://myvuwac-my.sharepoint.com/:p:/r/personal/honissluke_myvuw_ac_nz/_layouts/15/Doc.aspx?sourcedoc=%7BE20A2228-4D77-4CBA-885A-A6A4C88A28D2%7D&file=Presentation.pptx&action=edit&mobileredirect=true&wdNewAndOpenCt=1573005022519&wdPreviousSession=6bb71aef-ac56-484a-be1d-52d6207d1023&wdOrigin=ohpAppStartPages&cid=89edb8fe-198b-4e91-8d7a-a2e40f9ce202)
 
-## Setting up
 
-The database is located at `mongodb://shoeshop:nwen304shoeshop@ec2-3-94-180-36.compute-1.amazonaws.com:27017/shoeshop`. Set the `DATABASE_URL` to this.
+## Setting up and running
 
-Copy `.env_example` and rename it to `.env`, change the environment variable inside to suit. `EMAIL_EMAIL` is the full name of the email you are using i.e. `username@ecs.vuw.ac.nz`. We reccomend using the ECS mail servers `mail.ecs.vuw.ac.nz`.
+1. Clone the repo and run `npm install` in the directory created
+1. Copy `.env_example` and rename to `.env`
+1. Edit the environment variable value (see below)
+1. Run `node seeds/product-seeds.js` to run the seeds file (new database only)
+1. Run `npm start` to start the server (or `npm run dev` for development)
 
-Get your Facebook client id and secret from the [Facebook developers page](https://developers.facebook.com) after you register an application.
+### Environment variables
 
-Session secret should be a randomly generated string.
+```
+DATABASE_URL= # the mongodb url of the database
+SESSION_SECRET= # the session secret, should be a string of random characters or similar
+FACEBOOK_CLIENT_ID= # the facbook app client id
+FACEBOOK_CLIENT_SECRET= # the facebook app secret
+EMAIL_HOST= # the hostname of the email server
+EMAIL_USER= # the username for the email server
+EMAIL_PASSWORD= # the email password
+EMAIL_EMAIL= # the actual email address (username@server.com)
+```
+
+The database url is `mongodb://shoeshop:nwen304shoeshop@ec2-3-94-180-36.compute-1.amazonaws.com:27017/shoeshop`
+
+The Facbook client id is `398981340768965` and the client secret is `2519fc8de98896280d6e2de5d9f7f825`
+
+The ECS mail server is `mail.ecs.vuw.ac.nz`. Please set the other email options yourself (`EMAIL_USER` is just your ecs username i.e lastnamefirstname)
 
 
 ## How our system works
