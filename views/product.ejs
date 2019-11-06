@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-2">
     <%- include('partials/sidebar') %>
   </div>
   <div class="col-sm-4">
     <img class="img-fluid" src=<%= data.product.image %> alt=<%= data.product.name %>/>
   </div>
-  <div class="col-sm-5">
+  <div class="col-sm-6">
     <p class="productname"><%= data.product.name %></p>
     <p><b>Gender:</b> <%- data.product.gender === 'm' ? 'Mens' : 'Womans' %></p>
     <p><b>Brand:</b> <%= data.product.brand %> | <b>Category:</b> <%= data.product.category %> | <b>Sub Category:</b> <%= data.product.subCategory %></p>
