@@ -24,6 +24,10 @@ const productSchema = new Schema({
     enum: ['m', 'f'],
     required: [true, 'Gender field must be either m or f']
   },
+  brand: {
+    type: String,
+    required: [true, 'Brand is required']
+  },
   stock: {
     type: Array, // should be an array of objects {size: int, count: int}
   },
@@ -35,9 +39,13 @@ const productSchema = new Schema({
     type:String,
     required:[true, 'Description field is required']
   },
-  avilable: {
+  available: {
     type: Boolean,
     default: true
+  },
+  onSale: {
+    type: Boolean,
+    defaul: false,
   },
   created_at: { type: Date, default: Date.now},
   updated_at: {type: Date, default: Date.now},

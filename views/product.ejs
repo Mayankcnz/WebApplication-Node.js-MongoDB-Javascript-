@@ -1,26 +1,40 @@
 <div class="row">
-  <div class="col-sm-7">
+  <div class="col-sm-3">
+    <%- include('partials/sidebar') %>
+  </div>
+  <div class="col-sm-4">
     <img class="img-fluid" src=<%= data.product.image %> alt=<%= data.product.name %>/>
   </div>
   <div class="col-sm-5">
-    <table class="table">
-      <tr>
-        <th>Shoe size</th>
-        <th>Stock</th>
-      </tr>
-      <% for(let i = 0; i < data.product.stock.length; i++) { %>
-        <tr>
-          <td><%= data.product.stock[i].size %></td>
-          <td><%= data.product.stock[i].count %></td>
-        </tr>
+    <p class="productname"><%= data.product.name %></p>
+    <p><b>Gender:</b> <%- data.product.gender === 'm' ? 'Mens' : 'Womans' %></p>
+    <p><b>Brand:</b> <%= data.product.brand %> | <b>Category:</b> <%= data.product.category %> | <b>Sub Category:</b> <%= data.product.subCategory %></p>
+    <p>
+      <b>Cost:</b> $<%= data.product.cost %>
+      <% if(data.product.onSale) { %>
+        <span style='color: red'> | ON SALE!</span>
       <% } %>
-      <div style="padding-top: 30px">
-          <p class="productname"><%= data.product.name %></p>
-          <p class="price">Price: $<%= data.product.cost %></p>
-          <p><%= data.product.description %></p>
-          <button onclick="addToCart('<%= data.product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
-          <div style="padding-bottom: 30px"></div>
-      </div>
-    </table>
+      <% if (data.product.available) { %><button onclick="addToCart('<%= data.product._id%>')" type="button" class="btn btn-primary">Add to Cart</button><% } %>
+    </p>
+    
+    <p><b>Description:</b></p>
+    <p><%= data.product.description %></p>
+    <% if (data.product.available) { %>
+      <p>Stock</p>
+      <table class="table">
+        <tr>
+          <th>Shoe size</th>
+          <th>Stock</th>
+        </tr>
+        <% for(let i = 0; i < data.product.stock.length; i++) { %>
+          <tr>
+            <td><%= data.product.stock[i].size %></td>
+            <td><%= data.product.stock[i].count %></td>
+          </tr>
+        <% } %>
+      </table>
+    <% } else { %>
+      <p><b>Item currently unavailable</b></p>
+    <% } %>
   </div>
 </div>

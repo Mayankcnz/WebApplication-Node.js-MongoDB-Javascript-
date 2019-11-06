@@ -12,3 +12,77 @@ Copy `.env_example` and rename it to `.env`, change the environment variable ins
 Get your Facebook client id and secret from the [Facebook developers page](https://developers.facebook.com) after you register an application.
 
 Session secret should be a randomly generated string.
+
+
+## How our system works
+
+### Home page
+
+The home page has a image slider of the 4 most recently updated products. Below it are the 4 newest products. There is a sidebar on the left that make searching for products easier.
+
+The navigation bar has a login button dropdown that allows you to create an account, login with email, or login with Facebook. The search bar searches products based on name or description. There is a button to access your cart when you are logged in.
+
+### About page
+
+The about page has some information about ShoeShop and some images of the shop as well as some legal stuff.
+
+### Products page
+
+The products page lists all the products that meet the search/filter criteria (defined in the url querty parameters). The sidebar is the same filtering that the home page has. Here you can add items to your cart as well.
+
+### Individual product page
+
+Here you can see more details about the product. Stock is shown and will only be shown when the product is available. Same with the add to cart button.
+
+### Forgot password pages
+
+You can reset your password which will send an email to the provided email if the user account exists. You can click on the link to reset your password, where you will be prompted to choose a new password.
+
+
+## Division of work
+
+### Jeffrey
+- front end
+- stylesheets
+- seed file
+
+### Luke
+- server side routing
+- authentication
+- database models
+- hosting
+- other server side setup
+- project structure
+
+### Mayank
+- database models
+- front end
+- cart
+- client side javascript
+- stylesheets
+- other server side setup
+
+
+## REST Interace
+
+
+## Error Handling
+
+We always ensure that all database queries are executed and do not error out. We use promises that mongoose outputs to ensure this and render an error page if an error occurs.
+
+We have some client side validation to ensure that our ajax requests are valid and do not error out. We send a JSON object with the `error` field set if there is an error which we catch client side.
+
+We always log our server side errors through Winston.js into an error log file.
+
+
+## Database design
+
+We use mongodb for our database.
+
+We have 3 tables. `products`, `orders`, and `users`. The products table stores all the product documents as defined in `models/product.js`, orders and users are defined similarly.
+
+The user password is hashed and salted using `bcrypt`.
+
+### Database access code
+
+We have `src/db.js` which connects to the database and exports the database connection. The connection is used in each of the models folder. The database connection is set up when the server starts. The server will not start unless a database connection is obtained. The documents are retrieved by directly calling the functions from the specified mongoose model.
