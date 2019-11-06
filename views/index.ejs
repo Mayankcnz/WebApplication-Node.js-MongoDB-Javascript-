@@ -1,5 +1,7 @@
  <!-- Slideshow container -->
  <div class="slideshow-container">
+    <div class="row">
+				<div class="col-sm-12">
   <!-- Full-width images with number and caption text -->
   <% for(let i = 0; i < data.updatedProducts.length; i++) { %>
     <div class="text-center slide fade">
@@ -12,7 +14,7 @@
   <a class="prev" onclick="plusSlides(-1)">&lt;-</a>
   <a class="next" onclick="plusSlides(1)">-&gt;</a>
 </div>
-<br>
+
 
 <!-- The dots/circles -->
 <div style="text-align:center">
@@ -20,7 +22,12 @@
     <span class="dot" onclick="currentSlide(<%= i+1 %>)"></span>
   <% } %>
 </div>
+</div>
+</div>
+<br/>
+<br/>
 
+<div class="container-fluid">
 <div class="row">
 <div class="col-sm-3">
   <div class="left-sidebar">
@@ -81,7 +88,7 @@
     <div class="brands_products"><!--brands_products-->
       <h2>Brands</h2>
       <div class="brands-name">
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="list" >
           <li><a href="/products?brand=adidas">Adidas</a></li>
           <li><a href="/products?brand=nike">Nike</a></li>
           <li><a href="/products?brand=puma">Puma</a></li>
@@ -109,12 +116,15 @@
 </div>
 
 <div class="new-products text-center col-sm-9 padding-right">
-  <h2>Newest Products</h2>
+    <div class="features_items"><!--features_items-->
+      <h2 class="title text-center">Features Items</h2>
   <ul class="product-list">
     <% for(let i = 0; i < data.newProducts.length; i++) { %>
       <%- include('partials/cell', {product: data.newProducts[i]}) %>
     <% } %>
   </ul>
+  </div>
+</div>
 </div>
 </div>
 
