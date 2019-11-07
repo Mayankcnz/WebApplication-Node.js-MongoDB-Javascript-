@@ -10,22 +10,41 @@ class Cart {
     this.totalPrice = previousCart.totalPrice;
   }
 
-  add(item) {
+
+  // if id is same as already present items, then increase the quantitity others add item
+  add(item, shoeSize) {
+
+    console.log("wow");
+    var new_item = new Object();
+    console.log(shoeSize)
     
     let exits = false;
     let i = 0;
     for (i; i < this.items.length; i++){
-      if(JSON.stringify(this.items[i].item._id) === JSON.stringify(item._id)){
+      console.log(this.items[i].new_item.size+" ha2");
+      if(JSON.stringify(this.items[i].new_item._id) === JSON.stringify(item._id) 
+                  && parseInt(this.items[i].new_item.size) === parseInt(shoeSize)){
+        console.log("true");
         exits = true;
         break;
       }
     }
+
     if(exits) { // item exists in cart
+      console.log(this.items[i].qty);
       this.items[i].qty = this.items[i].qty + 1;
     } else { // new item to be added
+      new_item._id = item._id;
+      new_item.available = item.avilable;
+      new_item.size = parseInt(shoeSize);
+      new_item.description = item.description;
+      new_item.cost = item.cost;
+      new_item.category = item.category;
+      new_item.name = item.name;
+      new_item.qty  = item.qty;
       console.log(typeof(this.items));
       if (typeof(this.items) != "object") this.items = [];
-      this.items.push({item, qty: 1})
+      this.items.push({new_item, qty: 1})
     }
 
     this.totalPrice += item.cost;

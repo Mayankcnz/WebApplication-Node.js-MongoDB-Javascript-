@@ -19,12 +19,11 @@
         
             <div class="shoedropdown">
               <div class="select">
-                <span>Select Size</span>
+                <span id="span_text">Select Size</span>
                 <i class="fa fa-chevron-left"></i>
               </div>
               <input type="hidden" name="gender">
               <ul class="shoedropdown-menu">
-                <% console.log("product"); console.log(data.product.stock) %>
                 <% for (var i in data.product.stock){ %>
                 <li id='<%- data.product.stock[i].size %>'><%- data.product.stock[i].size %></li>
                 <% } %>

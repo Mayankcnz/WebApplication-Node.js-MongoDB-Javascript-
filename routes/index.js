@@ -2,6 +2,7 @@ const express = require('express');
 const auth = require('./auth');
 const products = require('./products');
 const cart = require('./cart');
+const checkout = require('./checkout');
 const utils = require('../src/utils');
 
 const Products = require('../models/product');
@@ -11,6 +12,7 @@ const router = express.Router();
 router.use('/auth', auth);
 router.use('/products', products);
 router.use('/cart', cart);
+router.use('/checkout',checkout);
 
 
 router.get('/', (req, res) => {

@@ -3,17 +3,17 @@
     <% for (let i = 0; i < data.cart.items.length; i++) { %>
       <tr>
         <td>
-          <%= data.cart.items[i].item.name %>
+          <%= data.cart.items[i].new_item.name %>
         </td>
         <td>
           <div class="input-group">
-            <button class="minus-item input-group-addon btn btn-primary" data-name='<%= data.cart.items[i].item.name %>' >-</button>
-            <input type="number" class="item-count form-control" data-name='<%= data.cart.items[i].item.name %>' value='<%= data.cart.items[i].qty %>' > 
-            <button class="plus-item btn btn-primary input-group-addon" data-name='<%= data.cart.items[i].item.name %>'>+</button> 
+            <button class="minus-item input-group-addon btn btn-primary" data-name='<%= data.cart.items[i].new_item.name %>' >-</button>
+            <input type="number" class="item-count form-control" data-name='<%= data.cart.items[i].new_item.name %>' value='<%= data.cart.items[i].qty %>' > 
+            <button class="plus-item btn btn-primary input-group-addon" data-name='<%= data.cart.items[i].new_item.name %>'>+</button> 
           </div>
         </td>
         <td>
-          <button onclick="deleteFromCart('<%= data.cart.items[i].item._id %>')" class="delete-item btn btn-danger" data-name='<%= data.cart.items[i].item.name %>' >Delete</button>
+          <button onclick="deleteFromCart('<%= data.cart.items[i].new_item._id %>')" class="delete-item btn btn-danger" data-name='<%= data.cart.items[i].new_item.name %>' >Delete</button>
         </td>  
         <td>
           Quantity: <%= data.cart.items[i].qty %>
@@ -23,3 +23,4 @@
   <% } %>
 </table>
 <div>Total price: $<span class="total-cart"><%= data.cart.totalPrice %></span></div>
+<div><a href="/checkout/" class="product-link" ><button>Go to checkout</button></a></div>

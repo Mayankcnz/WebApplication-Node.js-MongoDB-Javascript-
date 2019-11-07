@@ -11,8 +11,9 @@
       </a>
       <div class="price-box">
         <p class="price">$<%= product.cost %></p>
-        <button onclick="addToCart('<%= product._id%>')" type="button" class="btn btn-primary">Add to Cart</button>
+        <a href="/products/<%= product._id %>" class="product-link"> <button  type="button" class="btn btn-primary">Add to Cart</button></a>
       </div>
     </figure>
 </li>
 
+<!-- onclick="addToCart('<%= product._id%>')" -->

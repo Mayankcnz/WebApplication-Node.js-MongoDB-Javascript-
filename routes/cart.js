@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/', utils.ensureAuthenticated, (req, res) => {
   User.findById(req.user._id).then((output) => {
+    console.log(output.cart)
+    console.log(output.cart.items);
     return utils.render(req, res, 'cart', 'Cart', {cart: output.cart});
   }).catch((error) => {
     utils.log('error', error);
@@ -39,6 +41,9 @@ router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
 });
 
 router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
+
+  const {size} = req.body
+  console.log(size);
   Promise.all([
     User.findById(req.user._id),
     Products.findById(req.params.id)
@@ -48,7 +53,8 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     }
 
     const cart = new Cart(outputs[0].cart);
-    cart.add(outputs[1]);
+    console.log("here1");
+    cart.add(outputs[1], size);
     outputs[0].cart = cart.getObject();
     outputs[0].save();
     return res.send({added: true, status: 200})
@@ -65,7 +71,7 @@ router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
   const items = cart.items;
   const mycart = new Cart(cart);
   for (i in items){
-    if(items[i].item._id == id){
+    if(items[i].new_item._id == id){
       var list = mycart.remove(i);
       break;
     }
