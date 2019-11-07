@@ -42,6 +42,7 @@ class Cart {
       new_item.category = item.category;
       new_item.name = item.name;
       new_item.qty  = item.qty;
+      new_item.image = item.image;
       console.log(typeof(this.items));
       if (typeof(this.items) != "object") this.items = [];
       this.items.push({new_item, qty: 1})

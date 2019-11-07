@@ -76,6 +76,11 @@
   background-color: #717171;
 }
 
+#category-img {
+  float: left;
+  margin-top: 40px;
+}
+
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
