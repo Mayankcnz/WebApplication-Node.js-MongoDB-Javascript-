@@ -56,8 +56,8 @@ passport.use(new LocalStrategy(
     User.findOne({email: username}).then((output) => {
       if (!output) { return done(null, false); } // user doesnt exist
       bcrypt.compare(password, output.password, (err, res) => {
-        if (output) return done(null, output); // valid password
-        return done(null, false);
+        if (res) return done(null, output); // valid password
+        return done(null, false); // will redirect to /auth/login
       });
     }).catch((error) => {
       utils.log('error', error);

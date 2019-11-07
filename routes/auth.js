@@ -119,20 +119,22 @@ router.post('/reset/', (req, res) => {
 
 router.post('/signup/', (req, res) => {
   User.findOne({email: req.body.email}).then((output) => { // does the user already exist
-    if(output) return res.redirect('/auth/login');
+    if(output) {
+      return utils.renderError(req, res, 400, 'User already created with that email');
+    } else { // user doesnt exit so create
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        User.create({name: req.body.name, email: req.body.email, password: hash}).then((output) => {
+          return res.redirect('/auth/login');
+        }).catch((error) => {
+          utils.log(error);
+          return utils.renderError(req, res, 500, 'Something went wrong');
+        })
+      })
+    }
   }).catch((error) => {
     utils.log('error', error);
     return utils.renderError(req, res, 500, 'Something went wrong');
   });
-  
-  bcrypt.hash(req.body.password, 10, (err, hash) => {
-    User.create({name: req.body.name, email: req.body.email, password: hash}).then((output) => {
-      return res.redirect('/auth/login');
-    }).catch((error) => {
-      utils.log(error);
-      return utils.renderError(req, res, 500, 'Something went wrong');
-    })
-  })
 });
 
 
