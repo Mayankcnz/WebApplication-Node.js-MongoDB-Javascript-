@@ -84,6 +84,15 @@ You can reset your password which will send an email to the provided email if th
 
 ## REST Interace
 
+We use AJAX requests for handling the cart updating.
+
+`POST /cart/add/:id`
+
+Add an item to the cart based on the id and size of shoe. `size` is a required body parameter
+
+`DELETE /cart/delete/:id`
+
+Delete and item from the cart based on ID
 
 ## Error Handling
 
