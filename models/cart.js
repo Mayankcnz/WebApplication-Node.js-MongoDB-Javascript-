@@ -11,7 +11,17 @@ class Cart {
   }
 
 
-  // if id is same as already present items, then increase the quantitity others add item
+  /**
+   * 
+   * @param {*} item 
+   * @param {*} shoeSize 
+   * 
+   * Takes the product and selected shoe size, creates a new javascript object and adds to the cart. 
+   * Since the javascript object is a json like document hence it makes it easily transfererable between 
+   * our database. 
+   * The function simply updates the quanitity if the product is already present in the cart of same size and color
+   * otherwise it creates a new item.
+   */
   add(item, shoeSize) {
 
     let new_item = new Object();
@@ -46,6 +56,12 @@ class Cart {
     this.totalCost += item.cost;
   };
 
+
+  /**
+   * 
+   * @param {*} item 
+   * Takes the index item to remove the product from the cart.
+   */
   remove(item) {
     var storedItem = this.items[item];
     if(storedItem) { // item exists in cart
@@ -59,14 +75,23 @@ class Cart {
     return this.items;
   }
 
+  /**
+   * returns a list of items
+   */
   getItems() {
     return this.items;
   }
 
+  /**
+   * returns grand total of the items in the cart
+   */
   gettotalCost() {
     return this.totalCost;
   }
 
+  /**
+   * returns an item object
+   */
   getObject() {
     return {totalCost: this.totalCost, items: this.items}
   }
