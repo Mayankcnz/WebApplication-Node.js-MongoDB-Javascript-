@@ -63,9 +63,9 @@ router.get('/complete/', utils.ensureAuthenticated, (req, res) => {
  */
 router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
   User.findById(req.user._id).then((output) => {
-    output.cart = {items: [], totalPrice: 0};
+    output.cart = {items: [], totalCost: 0};
     output.save();
-    return utils.render(req, res, 'cart', 'Cart', {cart: {items: [], totalPrice: 0}});
+    return utils.render(req, res, 'cart', 'Cart', {cart: {items: [], totalCost: 0}});
   }).catch((error) => {
     utils.log('error', error);
     return utils.renderError(req, res, 500, 'Error occured clearing cart');

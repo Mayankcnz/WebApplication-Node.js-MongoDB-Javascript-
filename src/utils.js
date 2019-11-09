@@ -41,6 +41,7 @@ const render = (req, res, page, title, data) => {
  * @param {string} error 
  */
 const renderError = (req, res, code, error) => {
+  res.status(code)
   return render(req, res, 'error', `Error ${code}`, {error, code});
 }
 

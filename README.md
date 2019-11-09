@@ -4,6 +4,8 @@
 
 [Slides for final presentation](https://myvuwac-my.sharepoint.com/:p:/r/personal/honissluke_myvuw_ac_nz/_layouts/15/Doc.aspx?sourcedoc=%7BE20A2228-4D77-4CBA-885A-A6A4C88A28D2%7D&file=Presentation.pptx&action=edit&mobileredirect=true&wdNewAndOpenCt=1573005022519&wdPreviousSession=6bb71aef-ac56-484a-be1d-52d6207d1023&wdOrigin=ohpAppStartPages&cid=89edb8fe-198b-4e91-8d7a-a2e40f9ce202)
 
+[Link to heroku instance](https://nwen304-shoeshop.herokuapp.com/). Admin email is `admin@nwen304.nz`, password is `nwen304shoeshop`. Admin interface located at `/orders/`
+
 
 ## Setting up and running
 
@@ -24,7 +26,7 @@ EMAIL_HOST= # the hostname of the email server
 EMAIL_USER= # the username for the email server
 EMAIL_PASSWORD= # the email password
 EMAIL_EMAIL= # the actual email address (username@server.com)
-ADMIN_EMAIL= # the email address of the admin user account (must be in database)
+ADMIN_EMAIL= # the email address of the admin user account (must be a user in database)
 ```
 
 The database url is `mongodb://shoeshop:nwen304shoeshop@ec2-3-94-180-36.compute-1.amazonaws.com:27017/shoeshop`
@@ -111,6 +113,46 @@ We use mongodb for our database.
 We have 3 tables. `products`, `orders`, and `users`. The products table stores all the product documents as defined in `models/product.js`, orders and users are defined similarly.
 
 The user password is hashed and salted using `bcrypt`.
+
+### Products
+
+The products table holds all of the shoe items that we sell. The schema is below
+
+- `name`: string, required - name of item
+- `image`: string, required - a url to an image of the shoe
+- `category`: string, required - the category that the shoe is part of
+- `subCategory`: string - shoe sub category
+- `gender`: enum 'm' or 'f', required - whether it is a mans or womans shoe
+- `brand`, string, required - shoe brand
+- `stock`, array - an array of objects related to the stock of a size {size: int, count: int}
+- `cost`, number, required - cost of shoe
+- `description`, string, required - a short description of the shoe
+- `available`, boolean, default true - whether the shoe is available
+- `onSale`, boolean, default false - whether or not the shoe is on sale
+
+### Users
+
+The user model holds user information as well as their current cart
+
+- `name`: string, required - full name of user
+- `email`: string, required - users email address
+- `password`: string, required if not facebook auth - the hashed and salted password as produced by the `bcrypt` function
+- `authTyoe`: string, required - the type of authentication that the user has, either facebook or local (email/pw)
+- `token`: string - used for password reset
+- `cart`: object - the users cart object, stores the items along with the quantity and sizes, total cost of the cart as well
+
+### Orders
+
+- `user`: the user object
+- `cart`: the cart that the user checked out with
+- `address`: object, required - address of user
+- `paymentInfo`: object, required - holds credit card information
+- `email`: string, required - the email provided during checkout
+- `name`: string, required - the name provided during checkout
+
+### Sessions
+
+We store sessions server side. This basically holds some information about the logged in user but it is never shown or accessed directly on the front end.
 
 ### Database access code
 
