@@ -1,5 +1,5 @@
 <div class="table-wrapper">
-	
+    
 	<div class="table-row table-header">
 		<div class="col-wrapper order-date-number-po">
 			<div class="table-col order-date">Date</div>
@@ -25,7 +25,8 @@
 		</div>
 		
 	</div>
-	
+    <% if (data.orders !== null) { %>
+        <% for (var i in data.orders){ %>
 	<div class="table-row">
 		<div class="col-wrapper order-date-number-po">
 			<div class="table-col order-date">12 May 2017</div>
@@ -37,7 +38,7 @@
 				<div class="table-col order-year">2018</div>
 				<div class="table-col order-model">U24MB</div>
 			</div>
-			<div class="table-col order-customer">Willy Coyote & Road Runner</div>
+			<div class="table-col order-customer"><%- data.orders[i].name%></div>
 		</div>
 		
 		<div class="col-wrapper order-status-signed">
@@ -47,26 +48,6 @@
 		
 	</div>
 	
-	<div class="table-row">
-		<div class="col-wrapper order-date-number-po">
-			<div class="table-col order-date">09 May 2017</div>
-			<div class="table-col order-number">SO-21904</div>
-		</div>
-		
-		<div class="col-wrapper order-year-model-customer">
-			<div class="col-wrapper order-year-model">
-				<div class="table-col order-year">2018</div>
-				<div class="table-col order-model">U24TB</div>
-			</div>
-			<div class="table-col order-customer">Jerry & Elaine</div>
-		</div>
-		
-		<div class="col-wrapper order-status-signed">
-			<div class="table-col order-status">Open</div>
-			<div class="table-col order-signed">❌</div>
-		</div>
-		
-		
-	</div>
+<% }} %>
 	
 </div>
