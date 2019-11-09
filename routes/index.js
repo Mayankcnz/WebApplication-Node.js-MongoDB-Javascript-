@@ -6,7 +6,7 @@ const products = require('./products');
 const cart = require('./cart');
 const checkout = require('./checkout');
 const utils = require('../src/utils');
-
+const order = require('./orders');
 const Products = require('../models/product');
 
 const router = express.Router();
@@ -16,6 +16,7 @@ router.use('/auth', auth);
 router.use('/products', products);
 router.use('/cart', cart);
 router.use('/checkout',checkout);
+router.use('/orders',order);
 
 router.get('/', (req, res) => {
   getCachedItems().then((output) => {
