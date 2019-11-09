@@ -43,6 +43,11 @@ router.post('/checkout/', utils.ensureAuthenticated, (req, res) => {
     })
 
     order.save((err, output) =>{
+      if(err) {
+        utils.log('error', err)
+        return res.send({complete: false, error: 'Failed to save order'})
+      }
+      return res.send({complete: true})
       console.log("order saved");
     })
 });

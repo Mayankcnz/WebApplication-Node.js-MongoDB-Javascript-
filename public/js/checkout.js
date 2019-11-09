@@ -42,7 +42,9 @@ function submitF(form) {
             type: "POST",
             data: {formData:obj},
             success: function(data, textStatus, jqXHR) {
-                alert('Success!');
+              if(data.error) alert('Error occured!')
+              
+              alert('Success!');
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error occurred!');
@@ -51,6 +53,8 @@ function submitF(form) {
         });
         
 
+    } else {
+      alert('Some fields are invalid!')
     }
 
 

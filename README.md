@@ -9,7 +9,7 @@
 
 1. Clone the repo and run `npm install` in the directory created
 1. Copy `.env_example` and rename to `.env`
-1. Edit the environment variable value (see below)
+1. Edit the environment variable values (see below)
 1. Run `node seeds/product-seeds.js` to run the seeds file (new database only)
 1. Run `npm start` to start the server (or `npm run dev` for development)
 
@@ -24,13 +24,14 @@ EMAIL_HOST= # the hostname of the email server
 EMAIL_USER= # the username for the email server
 EMAIL_PASSWORD= # the email password
 EMAIL_EMAIL= # the actual email address (username@server.com)
+ADMIN_EMAIL= # the email address of the admin user account (must be in database)
 ```
 
 The database url is `mongodb://shoeshop:nwen304shoeshop@ec2-3-94-180-36.compute-1.amazonaws.com:27017/shoeshop`
 
 The Facbook client id is `398981340768965` and the client secret is `2519fc8de98896280d6e2de5d9f7f825`
 
-The ECS mail server is `mail.ecs.vuw.ac.nz`. Please set the other email options yourself (`EMAIL_USER` is just your ecs username i.e lastnamefirstname)
+The ECS mail server is `mail.ecs.vuw.ac.nz`. Please set the other email options to your own account (`EMAIL_USER` is just your ecs username i.e lastnamefirstname). `EMAIL_EMAIL` is the full email address.
 
 
 ## How our system works
@@ -84,6 +85,15 @@ You can reset your password which will send an email to the provided email if th
 
 ## REST Interace
 
+We use AJAX requests for handling the cart updating.
+
+`POST /cart/add/:id`
+
+Add an item to the cart based on the id and size of shoe. `size` is a required body parameter
+
+`DELETE /cart/delete/:id`
+
+Delete and item from the cart based on ID
 
 ## Error Handling
 
