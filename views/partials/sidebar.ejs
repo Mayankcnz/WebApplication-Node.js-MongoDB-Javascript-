@@ -3,7 +3,7 @@
   <div class="panel-group category-products" id="accordian"><!--category-productsr-->
     <div class="brands_products"><!--brands_products-->
       <div class="brands-name">
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="nav brands nav-pills nav-stacked">
           <li><a href="/products?category=fancy">Fancy</a></li>
           <li><a href="/products?category=boots">Boots</a></li>
           <li><a href="/products?category=sports">Sports</a></li>
@@ -14,7 +14,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+          <a id="Men" data-toggle="collapse" data-parent="#accordian" href="#mens">
             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
             Mens
           </a>
@@ -37,7 +37,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordian" href="#womens">
+          <a id="Women" data-toggle="collapse" data-parent="#accordian" href="#womens">
             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
             Womens
           </a>
@@ -58,7 +58,7 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title"><a href="#">Kids</a></h4>
+        <h4 class="panel-title"><a id="Kid" href="#">Kids</a></h4>
       </div>
     </div>
   </div><!--/category-products-->
@@ -66,7 +66,7 @@
   <div class="brands_products"><!--brands_products-->
     <h2>Brands</h2>
     <div class="brands-name">
-      <ul class="nav nav-pills nav-stacked">
+      <ul class="brands nav nav-pills nav-stacked">
         <li><a href="/products?brand=adidas">Adidas</a></li>
         <li><a href="/products?brand=nike">Nike</a></li>
         <li><a href="/products?brand=puma">Puma</a></li>
@@ -82,18 +82,19 @@
     <form action="/products" method="GET">
       <h2>Price Range</h2>
       <label for="amount">Price range:</label>
-      <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+      <input type="text" id="amount" style="border: 0; background-color: rgb(15, 14, 14); color: rgb(233, 233, 233);font-weight: bold;" />
       <input type="hidden" id="maxPrice" name="maxPrice" />
       <input type="hidden" id="minPrice" name="minPrice" />
       
       <div id="slider-range"></div><br />
-      <input type="submit" value="Apply price" />
+      <button type="submit" class="btn btn-info" value="Apply price">Apply Price</button>
     </form>
   </div>
 </div>
 
 <script>
   $(function() {
+
     $( "#slider-range" ).slider({
       step: 1,
       range: true,
