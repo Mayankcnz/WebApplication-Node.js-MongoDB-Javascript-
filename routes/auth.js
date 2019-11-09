@@ -123,6 +123,7 @@ router.post('/signup/', (req, res) => {
       return utils.renderError(req, res, 400, 'User already created with that email');
     } else { // user doesnt exit so create
       bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if(err) utils.renderError(req, res, 500, 'Failed to register user') // an error occured
         User.create({name: req.body.name, email: req.body.email, password: hash}).then((output) => {
           return res.redirect('/auth/login');
         }).catch((error) => {
