@@ -22,35 +22,30 @@
       <div class="product-title" data-name='<%= data.cart.items[i].new_item.name %>' > <%= data.cart.items[i].new_item.name %></div>
       <p class="product-description">   <%= data.cart.items[i].new_item.description %></p>
     </div>
-    <div class="product-price">   <%= data.cart.items[i].new_item.cost %></div>
+    <div class="product-price">   <%- data.cart.items[i].new_item.cost %></div>
     <div class="product-quantity">
       <input type="number" value="<%- data.cart.items[i].qty %>" min="1">
     </div>
     <div class="product-removal">
       <button onclick="deleteFromCart('<%= data.cart.items[i].new_item._id %>')" class="remove-product"" data-name='<%= data.cart.items[i].new_item.name %>' >Delete</button>
     </div>
-    <div class="product-line-price">25.98</div>
+    <div class="product-line-price"> <%- data.cart.items[i].new_item.cost * data.cart.items[i].qty %></div>
   </div>
   <% }} %>
 
   <div class="totals">
-    <div class="totals-item">
-      <label>Subtotal</label>
-      <div class="totals-value" id="cart-subtotal">71.97</div>
-    </div>
-    <div class="totals-item">
-      <label>Tax (5%)</label>
-      <div class="totals-value" id="cart-tax">3.60</div>
-    </div>
     <div class="totals-item">
       <label>Shipping</label>
       <div class="totals-value" id="cart-shipping">15.00</div>
     </div>
     <div class="totals-item totals-item-total">
       <label>Grand Total</label>
-      <div class="totals-value" id="cart-total">90.57</div>
+      <div class="totals-value" id="cart-total"><%= data.cart.totalCost + 15 %> </div>
     </div>
   </div>
-      
+  <% if (data.cart.items.length > 0) { %>
     <a href="/checkout/" ><button class="checkout">Go to checkout</button></a>
+  <% } else { %>
+    <button onclick="alert('Please add items to cart first!')" class="checkout">Go to checkout</button>
+  <% } %>
 </div>

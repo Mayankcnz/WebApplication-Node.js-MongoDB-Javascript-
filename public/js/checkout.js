@@ -1,9 +1,6 @@
 
 
 function submitF(form) {
-
-    console.log("124");
-
     var letters = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
     var email = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     var number =  /^\d+$/;
@@ -40,8 +37,6 @@ function submitF(form) {
             expYear: expYear,
             CVC: CVC
         }
-
-        console.log("logza");
         $.ajax({
             url: `/cart/checkout/`,
             type: "POST",
