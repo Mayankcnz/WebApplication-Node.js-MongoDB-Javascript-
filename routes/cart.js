@@ -54,14 +54,18 @@ router.post('/checkout/', utils.ensureAuthenticated, (req, res) => {
 
 });
 
+router.get('/complete/', utils.ensureAuthenticated, (req, res) => {
+  return res.send('CART');
+});
+
 /**
  * Clear the users cart
  */
 router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
   User.findById(req.user._id).then((output) => {
-    output.cart = {items: [], totalCost: 0};
+    output.cart = {items: [], totalPrice: 0};
     output.save();
-    return utils.render(req, res, 'cart', 'Cart', {cart: {items: [], totalCost: 0}});
+    return utils.render(req, res, 'cart', 'Cart', {cart: {items: [], totalPrice: 0}});
   }).catch((error) => {
     utils.log('error', error);
     return utils.renderError(req, res, 500, 'Error occured clearing cart');
@@ -71,6 +75,7 @@ router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
 router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
 
   const {size} = req.body
+  console.log(size);
   Promise.all([
     User.findById(req.user._id),
     Products.findById(req.params.id)
@@ -80,6 +85,7 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     }
 
     const cart = new Cart(outputs[0].cart);
+    console.log("here1");
     cart.add(outputs[1], size);
     outputs[0].cart = cart.getObject();
     outputs[0].save();
@@ -89,6 +95,9 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     return res.send({error, status: 500, added: false});
   });
 });
+
+
+
 
 router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
   const id = req.params.id
