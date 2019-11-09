@@ -38,7 +38,6 @@ class Cart {
 
     if(exits) { // item exists in cart
       this.items[i].qty = this.items[i].qty + 1;
-      console.log(this.items[i])
     } else { // new item to be added
       new_item._id = item._id;
       new_item.available = item.avilable;

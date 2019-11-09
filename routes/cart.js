@@ -18,6 +18,9 @@ router.get('/', utils.ensureAuthenticated, (req, res) => {
   });
 });
 
+/**
+ * takes the form data as input and creates a new order objects and saves it to the order database
+ */
 router.post('/checkout/', utils.ensureAuthenticated, (req, res) => {
 
   const {formData} = req.body
@@ -48,7 +51,6 @@ router.post('/checkout/', utils.ensureAuthenticated, (req, res) => {
         return res.send({complete: false, error: 'Failed to save order'})
       }
       return res.send({complete: true})
-      console.log("order saved");
     })
 });
 
@@ -72,10 +74,13 @@ router.get('/clear/', utils.ensureAuthenticated, (req, res) => {
   })
 });
 
+
+/**
+ * takes shoe size in the reuqest paramerters and adds a new item to the logged in user cart
+ */
 router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
 
   const {size} = req.body
-  console.log(size);
   Promise.all([
     User.findById(req.user._id),
     Products.findById(req.params.id)
@@ -85,7 +90,6 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     }
 
     const cart = new Cart(outputs[0].cart);
-    console.log("here1");
     cart.add(outputs[1], size);
     outputs[0].cart = cart.getObject();
     outputs[0].save();
@@ -98,7 +102,9 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
 
 
 
-
+/**
+ * takes the product id and deletes that specific product from the user cart
+ */
 router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
   const id = req.params.id
   User.findById(req.user._id).then((user) => {

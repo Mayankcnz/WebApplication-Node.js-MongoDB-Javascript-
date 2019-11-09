@@ -13,6 +13,13 @@ const router = express.Router();
  *  category - a category the shoe is part of, string
  *  subCategory - a sub category for the shoe, string
  *  maxPrice - the max price that we want to search for, integer >= 0
+ * 
+ * 
+ * Pagination: perPage variable contains max number of items on each page, page variable contains current page number.
+ * First we are finding all documents in Products collection: 
+ * For each page we need to skip ((perPage * page) - perPage) values (on the first page the value of the skip should be 0):
+ * output only perPage items (4 in this case):
+ * count all items in collection with count() (we will use this value to calculate the number of pages):
  */
 router.get('/', (req, res) => {
   let maxPrice = 9999; // assumes that we wont have a product more than this cost (highly unlikely anyway)

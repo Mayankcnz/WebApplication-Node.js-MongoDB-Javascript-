@@ -56,15 +56,4 @@ function submitF(form) {
     } else {
       alert('Some fields are invalid!')
     }
-
-
 }
-
-$('form').on('submit', function(e) {
-  
-    console.log("ggggg");
-    // do stuff
-    // then submit form
-
-    //this.submit(); // does not trigger this event handler but submits the form instead
-});
