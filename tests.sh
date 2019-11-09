@@ -62,6 +62,6 @@ echo 'GET /products/search?q=shoe (should return 200)'
 curl -s -S -I http://localhost:3000/products/search?q=shoe | grep HTTP/1.1
 echo ''
 
-echo 'GET /orders (should return 200)'
+echo 'GET /orders (should return 403 as not logged in)'
 curl -s -S -I http://localhost:3000/orders | grep HTTP/1.1
 echo ''
