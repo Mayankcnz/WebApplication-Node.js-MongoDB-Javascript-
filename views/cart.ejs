@@ -24,7 +24,7 @@
     </div>
     <div class="product-price">   <%- data.cart.items[i].new_item.cost %></div>
     <div class="product-quantity">
-      <input type="number" value="<%- data.cart.items[i].qty %>" min="1">
+      <input readonly type="number" value="<%- data.cart.items[i].qty %>" min="1">
     </div>
     <div class="product-removal">
       <button onclick="deleteFromCart('<%= data.cart.items[i].new_item._id %>')" class="remove-product"" data-name='<%= data.cart.items[i].new_item.name %>' >Delete</button>
