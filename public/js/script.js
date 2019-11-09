@@ -1,25 +1,21 @@
 const addToCart = (id) =>{
-
-  console.log("HI");
-  
-  var span_Text = document.getElementById("span_text").innerText;
-  if( isNaN(span_Text)){
+  let size = document.getElementById("span_text").innerText;
+  if( isNaN(size)){
     alert("Shoe size must be specified");
     return;
   }
-
-  $.ajax({
-    url: `/cart/add/${id}`,
-    type: "POST",
-    data: {size:span_Text},
-    success: function(data, textStatus, jqXHR) {
-        alert('Success!');
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        alert('Error occurred!');
+  fetch(`/cart/add/${id}`, {method: 'POST', body: {size}}).then((output) => {
+    return output.json();
+  }).then((output) => {
+    if(output.error) {
+      alert('Failed to add item to cart')
+    } else {
+      alert('Added to cart')
     }
+  }).catch((error) => {
+    alert('Failed to add item to cart, are you logged in?')
+  })
 
-});
 }
 
 const deleteFromCart = (id) =>{

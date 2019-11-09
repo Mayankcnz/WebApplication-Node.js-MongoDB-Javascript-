@@ -26,6 +26,13 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+/**
+ * Facebook authentication strategy
+ * After the facebook auth callback has been called
+ * the strategy will check to see if a user exists already in the db
+ * if so then it will return that user profile and log them in
+ * if not then it will create a user and return the created user
+ */
 passport.use(new FacebookStrategy({
   clientID: process.env['FACEBOOK_CLIENT_ID'],
   clientSecret: process.env['FACEBOOK_CLIENT_SECRET'],
@@ -51,6 +58,10 @@ passport.use(new FacebookStrategy({
   });
 }));
 
+/**
+ * Local (email/pw) login strategy
+ * After logging in with email and password
+ */
 passport.use(new LocalStrategy(
   (username, password, done) => {
     User.findOne({email: username}).then((output) => {

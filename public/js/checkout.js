@@ -42,9 +42,11 @@ function submitF(form) {
             type: "POST",
             data: {formData:obj},
             success: function(data, textStatus, jqXHR) {
-              if(data.error) alert('Error occured!')
-              
-              alert('Success!');
+              if(data.error) {
+                alert('Error occured!')
+              }else {
+                alert('Success!');
+              }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('Error occurred!');
