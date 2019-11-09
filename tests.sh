@@ -30,7 +30,7 @@ echo 'GET /auth/forgot (should return 200)'
 curl -s -S -I http://localhost:3000/auth/forgot | grep HTTP/1.1
 echo ''
 
-echo 'GET /auth/logout (should return 200)'
+echo 'GET /auth/logout (should return 302 as redirects)'
 curl -s -S -I http://localhost:3000/auth/logout | grep HTTP/1.1
 echo ''
 
