@@ -2,28 +2,28 @@
 <div class="checkout-row">
   <div class="checkoutcol-75">
     <div class="checkout-container">
-      <form action="/action_page.php">
+      <form action="/checkout/"  method="post">
       
         <div class="checkout-row">
           <div class="checkoutcol-50">
             <h3>Billing Address</h3>
-            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+            <label for="fname"><i class="fa fa-user"></i> Full Names</label>
+            <input type="text" id="fname" name="firstname" placeholder="FirstName">
             <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="john@example.com">
+            <input type="text" id="email" name="email" placeholder="Enter Email">
             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+            <input type="text" id="adr" name="address" placeholder="Enter Your Address">
             <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="New York">
+            <input type="text" id="city" name="city" placeholder="City">
 
             <div class="checkout-row">
               <div class="checkoutcol-50">
                 <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="NY">
+                <input type="text" id="state" name="state" placeholder="State">
               </div>
               <div class="checkoutcol-50">
                 <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001">
+                <input type="text" id="zip" name="zip" placeholder="">
               </div>
             </div>
           </div>
@@ -38,19 +38,19 @@
               <i class="fa fa-cc-discover" style="color:orange;"></i>
             </div>
             <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+            <input type="text" id="cname" name="cardname" placeholder="Card Name">
             <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <input type="text" id="ccnum" name="cardnumber" placeholder="Card Number">
             <label for="expmonth">Exp Month</label>
-            <input type="text" id="expmonth" name="expmonth" placeholder="September">
+            <input type="text" id="expmonth" name="expmonth" placeholder="Exp Month">
             <div class="row">
               <div class="checkoutcol-50">
                 <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018">
+                <input type="text" id="expyear" name="expyear" placeholder="Year">
               </div>
               <div class="checkoutcol-50">
                 <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352">
+                <input type="text" id="cvv" name="cvv" placeholder="CVC">
               </div>
             </div>
           </div>
@@ -59,7 +59,7 @@
         <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
         </label>
-        <input type="submit" value="Continue to checkout" class="checkout-btn">
+        <input id="submit" type="button" type="button" value="Submit" onclick="submitF(this.form);" class="checkout-btn">
       </form>
     </div>
   </div>
@@ -70,48 +70,21 @@
           <span class="badge badge-secondary badge-pill">3</span>
         </h4>
         <ul class="list-group mb-3">
+            <% if (data.cart.items.length > 0) { %>
+              <% for (let i = 0; i < data.cart.items.length; i++) { %>
           <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
-              <h6 class="my-0">Product name</h6>
-              <small class="text-muted">Brief description</small>
+              <h6 class="my-0"><%- data.cart.items[i].new_item.name %></h6>
+              <small class="text-muted"><%- data.cart.items[i].new_item.description %></small>
             </div>
-            <span class="text-muted">$12</span>
+            <span class="text-muted"><%- data.cart.items[i].new_item.cost %></span>
           </li>
-          <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 class="my-0">Second product</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 class="my-0">Third item</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Promo code</h6>
-              <small>EXAMPLECODE</small>
-            </div>
-            <span class="text-success">-$5</span>
-          </li>
+          <% }} %>
           <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$20</strong>
-          </li>
+              <span>Total (USD)</span>
+              <strong><%- data.cart.totalPrice %></strong>
+            </li>
         </ul>
-  
-        <form class="card p-2">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code">
-            <div class="input-group-append">
-              <button type="submit" class="checkout-btn btn-secondary">Redeem</button>
-            </div>
-          </div>
-        </form>
     </div>
   </div>
 </div>

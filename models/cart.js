@@ -14,9 +14,7 @@ class Cart {
   // if id is same as already present items, then increase the quantitity others add item
   add(item, shoeSize) {
 
-    console.log("wow");
     var new_item = new Object();
-    console.log(shoeSize)
     
     let exits = false;
     let i = 0;
@@ -24,14 +22,12 @@ class Cart {
       console.log(this.items[i].new_item.size+" ha2");
       if(JSON.stringify(this.items[i].new_item._id) === JSON.stringify(item._id) 
                   && parseInt(this.items[i].new_item.size) === parseInt(shoeSize)){
-        console.log("true");
         exits = true;
         break;
       }
     }
 
     if(exits) { // item exists in cart
-      console.log(this.items[i].qty);
       this.items[i].qty = this.items[i].qty + 1;
     } else { // new item to be added
       new_item._id = item._id;
@@ -45,7 +41,7 @@ class Cart {
       new_item.image = item.image;
       console.log(typeof(this.items));
       if (typeof(this.items) != "object") this.items = [];
-      this.items.push({new_item, qty: 1})
+      this.items.push({new_item, qty: 1, totalCost: item.cost})
     }
 
     this.totalPrice += item.cost;

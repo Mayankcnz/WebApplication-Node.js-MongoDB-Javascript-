@@ -4,6 +4,8 @@ const utils = require('../src/utils')
 const Products = require('../models/product')
 const User = require('../models/user')
 const Cart = require('../models/cart');
+const Order = require('../models/order');
+
 
 const router = express.Router();
 
@@ -18,8 +20,38 @@ router.get('/', utils.ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get('/checkout/', utils.ensureAuthenticated, (req, res) => {
-  return res.send('CART');
+router.post('/checkout/', utils.ensureAuthenticated, (req, res) => {
+
+  console.log("here3334");
+  console.log(req.body);
+  const {formData} = req.body
+  console.log(formData);
+  var address = {
+    address: formData.address, city: formData.city, 
+        zip: formData.zip
+  }
+
+  var paymentInfo = {
+    cardName: formData.nameOnCard, creditNumber: formData.creditCardNumber,
+      expMonth: formData.expMonth, expYear: formData.expYear, CVC: formData.CVC
+  }
+
+  User.findById(req.user._id).then((user) =>{
+
+    var order = new Order({
+      user : user, 
+      cart : user.cart,
+      address : address,
+      paymentInfo: paymentInfo,
+      email: formData.email,
+      name: formData.name
+    })
+
+    order.save((err, output) =>{
+      console.log("order saved");
+    })
+});
+
 });
 
 router.get('/complete/', utils.ensureAuthenticated, (req, res) => {
@@ -63,6 +95,9 @@ router.post('/add/:id', utils.ensureAuthenticated, (req, res) => {
     return res.send({error, status: 500, added: false});
   });
 });
+
+
+
 
 router.delete('/delete/:id', utils.ensureAuthenticated, (req, res) => {
   const id = req.params.id
