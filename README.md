@@ -1,8 +1,4 @@
-# Nwen304-WebApplication
-
-[Slides for project progress](https://myvuwac-my.sharepoint.com/:p:/r/personal/honissluke_myvuw_ac_nz/_layouts/15/Doc.aspx?sourcedoc=%7B8BAB8085-EE5C-4676-974F-01CC1A8EC0F9%7D&file=Presentation.pptx&action=edit&mobileredirect=true&wdNewAndOpenCt=1570056463489&wdPreviousSession=7465ba52-9266-4c08-b4cc-5df99f78254b&wdOrigin=ohpAppStartPages)
-
-[Slides for final presentation](https://myvuwac-my.sharepoint.com/:p:/r/personal/honissluke_myvuw_ac_nz/_layouts/15/Doc.aspx?sourcedoc=%7BE20A2228-4D77-4CBA-885A-A6A4C88A28D2%7D&file=Presentation.pptx&action=edit&mobileredirect=true&wdNewAndOpenCt=1573005022519&wdPreviousSession=6bb71aef-ac56-484a-be1d-52d6207d1023&wdOrigin=ohpAppStartPages&cid=89edb8fe-198b-4e91-8d7a-a2e40f9ce202)
+WebApplication
 
 [Link to heroku instance](https://nwen304-shoeshop.herokuapp.com/). Admin email is `admin@nwen304.nz`, password is `nwen304shoeshop`. Admin interface located at `/orders/`
 
@@ -59,31 +55,6 @@ Here you can see more details about the product. Stock is shown and will only be
 ### Forgot password pages
 
 You can reset your password which will send an email to the provided email if the user account exists. You can click on the link to reset your password, where you will be prompted to choose a new password.
-
-
-## Division of work
-
-### Jeffrey
-- front end
-- stylesheets
-- seed file
-
-### Luke
-- server side routing
-- authentication
-- database models
-- hosting
-- other server side setup
-- project structure
-
-### Mayank
-- database models
-- front end
-- cart
-- client side javascript
-- stylesheets
-- other server side setup
-
 
 ## REST Interace
 
